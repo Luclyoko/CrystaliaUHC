@@ -9,3 +9,5 @@ commands:
       - h
     usage: /host <config;op;deop;spec>
     description: Commande d'administration de la partie.
+  map:
+    usage: /map <worldName>

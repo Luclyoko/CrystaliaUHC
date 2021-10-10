@@ -1,8 +1,8 @@
 package fr.luclyoko.crystaliauhc.map;
 
 import fr.luclyoko.crystaliauhc.Main;
+import fr.luclyoko.crystaliauhc.utils.PlayerUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
@@ -11,8 +11,6 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.scheduler.BukkitTask;
-
-import java.util.List;
 
 public class MapGenerator {
 
@@ -87,7 +85,7 @@ public class MapGenerator {
                 this.percentage = MapGenerator.this.numberChunk * 100 / this.todo;
                 if (this.percentage > MapGenerator.this.lastShow && this.percentage != 101) {
                     MapGenerator.this.lastShow = this.percentage;
-                    //TODO Affichage pourcentage en BossBar ou ActionBar
+                    Bukkit.getOnlinePlayers().forEach(player -> PlayerUtils.sendActionText(player, "Prégénération (monde : " + this.world.getName() + ") : " + this.percentage + "% / 100%."));
                 }
                 this.z += 16;
                 if (this.z >= this.size) {
@@ -98,8 +96,8 @@ public class MapGenerator {
                     MapGenerator.this.task.cancel();
                     MapGenerator.this.finish = true;
                     HandlerList.unregisterAll(MapGenerator.this.listener);
-                    String l = String.format("%.3f", new Object[]{Double.valueOf((System.currentTimeMillis() - this.startTime) / 1000.0D)});
-                    main.getLogger().info("SDSUHC | La génération de la map a duré: " + l + "s");
+                    String l = String.format("%.3f", (System.currentTimeMillis() - this.startTime) / 1000.0D);
+                    Bukkit.broadcastMessage("Prégénération du monde " + this.world.getName() + " terminée avec succès.");
                     Location location = new Location(Bukkit.getWorld("world"), 0.0D, 150.0D, 0.0D);
                     //TODO Génération plateforme spawn en Schematic
                     return;
