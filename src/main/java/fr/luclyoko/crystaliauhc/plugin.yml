@@ -1,0 +1,11 @@
+name: CrystaliaUHC
+author: Luclyoko
+version: 1.0-SNAPSHOT
+description: Plugin UHC du serveur Crystalia
+main: fr.luclyoko.crystaliauhc.Main
+commands:
+  host:
+    aliases:
+      - h
+    usage: /host <config;op;deop;spec>
+    description: Commande d'administration de la partie.
