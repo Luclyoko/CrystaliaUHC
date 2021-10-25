@@ -3,6 +3,7 @@ author: Luclyoko
 version: 1.0-SNAPSHOT
 description: Plugin UHC du serveur Crystalia
 main: fr.luclyoko.crystaliauhc.Main
+load: STARTUP
 commands:
   host:
     aliases:
@@ -10,4 +11,5 @@ commands:
     usage: /host <config;op;deop;spec>
     description: Commande d'administration de la partie.
   map:
-    usage: /map <worldName>
+    usage: /map <radius>
+    description: Commande temporaire de prégénération.

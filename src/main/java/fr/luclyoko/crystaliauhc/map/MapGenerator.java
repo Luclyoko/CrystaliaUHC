@@ -20,10 +20,10 @@ public class MapGenerator {
     private final int xCenter;
     private final int zCenter;
     private int numberChunk;
-    private int lastShow;
+    private int lastShow = -1;
     private ChunkLoader chunkLoader;
     private BukkitTask task;
-    private boolean finish;
+    private boolean finish = false;
 
     public MapGenerator (Main main, World world, int radius, int xCenter, int zCenter) {
         this.main = main;
@@ -31,6 +31,7 @@ public class MapGenerator {
         this.radius = radius;
         this.xCenter = xCenter;
         this.zCenter = zCenter;
+        preload();
     }
     
     private final Listener listener = new Listener() {
@@ -45,6 +46,18 @@ public class MapGenerator {
         Bukkit.getPluginManager().registerEvents(this.listener, main);
         this.task = Bukkit.getScheduler().runTaskTimer(main,
                 this.chunkLoader = new ChunkLoader(world, startTime, radius, xCenter, zCenter), 1L, 1L);
+    }
+
+    public boolean isFinish() {
+        return this.finish;
+    }
+
+    public ChunkLoader getChunkLoader() {
+        return this.chunkLoader;
+    }
+
+    void setFinish() {
+        this.finish = true;
     }
 
     private class ChunkLoader implements Runnable {
@@ -83,9 +96,9 @@ public class MapGenerator {
             while (i < 50) {
                 this.world.getChunkAt(this.world.getBlockAt(this.x - this.xCenter, 64, this.z - this.zCenter)).load(true);
                 this.percentage = MapGenerator.this.numberChunk * 100 / this.todo;
-                if (this.percentage > MapGenerator.this.lastShow && this.percentage != 101) {
+                if (this.percentage > MapGenerator.this.lastShow && this.percentage <= 100) {
                     MapGenerator.this.lastShow = this.percentage;
-                    Bukkit.getOnlinePlayers().forEach(player -> PlayerUtils.sendActionText(player, "Prégénération (monde : " + this.world.getName() + ") : " + this.percentage + "% / 100%."));
+                    Bukkit.getOnlinePlayers().forEach(player -> PlayerUtils.sendActionText(player, "§aPrégénération (monde : §o" + this.world.getName() + "§r§a) : §2" + this.percentage + "% / 100%"));
                 }
                 this.z += 16;
                 if (this.z >= this.size) {
