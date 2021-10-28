@@ -98,6 +98,7 @@ public class MapGenerator {
                 this.percentage = MapGenerator.this.numberChunk * 100 / this.todo;
                 if (this.percentage > MapGenerator.this.lastShow && this.percentage <= 100) {
                     MapGenerator.this.lastShow = this.percentage;
+                    main.getLogger().info("Prégéneration du monde " + world.getName() + " : " + this.percentage + "% / 100%");
                     Bukkit.getOnlinePlayers().forEach(player -> PlayerUtils.sendActionText(player, "§aPrégénération (monde : §o" + this.world.getName() + "§r§a) : §2" + this.percentage + "% / 100%"));
                 }
                 this.z += 16;

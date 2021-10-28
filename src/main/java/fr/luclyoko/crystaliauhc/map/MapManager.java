@@ -2,6 +2,7 @@ package fr.luclyoko.crystaliauhc.map;
 
 import fr.luclyoko.crystaliauhc.Main;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.block.Biome;
 
@@ -20,8 +21,9 @@ public class MapManager {
     }
 
     public void loadMap(String worldName, int xCenter, int zCenter) {
-        gameWorlds.add(new GameWorld(Bukkit.createWorld(WorldCreator.name(worldName)), xCenter, zCenter));
-
+        World myWorld = Bukkit.createWorld(WorldCreator.name("world"));
+        myWorld.getPopulators().add(new DiamondPopulator());
+        gameWorlds.add(new GameWorld(myWorld, xCenter, zCenter));
     }
 
     public void modifyBiomes() {
