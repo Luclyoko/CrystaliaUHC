@@ -3,7 +3,7 @@ package fr.luclyoko.crystaliauhc.game;
 import javax.annotation.Nullable;
 
 public enum GameState {
-    LOADING("§eEn attente de joueurs..."),
+    LOADING("§eEn préparation..."),
     STARTING("§6Démarrage en cours..."),
     PLAYING(""),
     FINISHED("§bPartie terminée");

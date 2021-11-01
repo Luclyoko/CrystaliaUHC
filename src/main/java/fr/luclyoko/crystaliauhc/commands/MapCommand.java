@@ -21,7 +21,7 @@ public class MapCommand implements CommandExecutor {
         if (args.length == 0) {
             switch (Main.getInstance().getGameManager().getGameState()) {
                 case LOADING:
-                    Main.getInstance().getGameManager().setUhc(new BleachUHC(Main.getInstance().getGameManager()));
+                    Main.getInstance().getGameManager().setGamemodeUhc(new BleachUHC(Main.getInstance().getGameManager()));
                     Main.getInstance().getGameManager().setGameState(GameState.STARTING);
                     return true;
                 case STARTING:

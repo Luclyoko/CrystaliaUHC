@@ -45,20 +45,20 @@ public class PersonalScoreboard {
 
     public void setLines(String ip) {
         int i = 0;
-        objectiveSign.setDisplayName(gameManager.getUhc().displayName);
+        objectiveSign.setDisplayName(gameManager.getGamemodeUhc().displayName);
         objectiveSign.setLine(i++, "§1");
-        objectiveSign.setLine(i++, "§7----- Infos -----");
-        objectiveSign.setLine(i, "§cStatut: " + gameManager.getGameState().getScoreboardDisplay());
+        objectiveSign.setLine(i++, "§f§lINFOS");
+        objectiveSign.setLine(i, " §7» §cStatut: " + gameManager.getGameState().getScoreboardDisplay());
 
         switch (gameManager.getGameState()) {
             case PLAYING:
                 //TODO Ajouter timer quand il sera codé
-                objectiveSign.setLine(i++, "§cTemps: ");
+                objectiveSign.setLine(i++, " §7» §cTemps: ");
                 break;
 
             case FINISHED:
                 //TODO Ajouter team victorieuse
-                objectiveSign.setLine(i++, "§6Victoire: ");
+                objectiveSign.setLine(i++, " §7» §6Victoire: ");
                 break;
             default:
                 i++;
@@ -66,15 +66,15 @@ public class PersonalScoreboard {
         }
 
         //TODO Ajouter nombre de joueurs / slots dispos
-        objectiveSign.setLine(i++, "§cJoueurs: ");
+        objectiveSign.setLine(i++, " §7» §cJoueurs: ");
         if (gameManager.getGameState().equals(GameState.PLAYING)) {
             objectiveSign.setLine(i++, "§2");
-            objectiveSign.setLine(i++, "§7----- Partie -----");
-            for (String line : gameManager.getUhc().getOptionalScoreboardLines()) {
+            objectiveSign.setLine(i++, "§f§lPARTIE");
+            for (String line : gameManager.getGamemodeUhc().getOptionalScoreboardLines()) {
                 objectiveSign.setLine(i++, line);
             }
             objectiveSign.setLine(i++, "§3");
-            objectiveSign.setLine(i++, "§7----- Bordure -----");
+            objectiveSign.setLine(i++, "§f§lBORDURE");
             //TODO Ajouter infos bordure
         }
         objectiveSign.setLine(i++, "§4");

@@ -1,12 +1,16 @@
 package fr.luclyoko.crystaliauhc;
 
 import fr.luclyoko.crystaliauhc.game.GameManager;
+import fr.luclyoko.crystaliauhc.guis.GuiManager;
 import fr.luclyoko.crystaliauhc.map.GameWorld;
+import fr.luclyoko.crystaliauhc.map.MapGenerator;
 import fr.luclyoko.crystaliauhc.map.MapManager;
 import fr.luclyoko.crystaliauhc.modules.Commands;
 import fr.luclyoko.crystaliauhc.modules.Listeners;
+import fr.luclyoko.crystaliauhc.utils.schematics.Schematic;
+import fr.luclyoko.crystaliauhc.utils.schematics.SchematicManager;
 import fr.luclyoko.crystaliauhc.utils.scoreboard.ScoreboardManager;
-import org.bukkit.Bukkit;
+import org.bukkit.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -38,6 +42,14 @@ public class Main extends JavaPlugin {
     private MapManager mapManager;
     private GameManager gameManager;
 
+    private GuiManager guiManager;
+    public GuiManager getGuiManager() {
+        return guiManager;
+    }
+
+    private SchematicManager schematicManager;
+    public SchematicManager getSchematicManager() {return schematicManager;}
+
     public Main () {
         instance = this;
     }
@@ -45,20 +57,33 @@ public class Main extends JavaPlugin {
     @Override
     public void onLoad() {
         File file = new File(getDataFolder().getParentFile().getParentFile(), "world");
-        deleteWorld(file);
+        if(!deleteWorld(file)) {
+            getLogger().severe("Erreur lors du reset de la map.");
+            getServer().getPluginManager().disablePlugin(this);
+        }
         this.mapManager = new MapManager(this);
         this.mapManager.modifyBiomes();
-        this.gameManager = new GameManager(this, new GameWorld(Bukkit.getWorld("world"), 0, 0));
     }
 
     @Override
     public void onEnable() {
-        new Commands(this).registerAll();
-        new Listeners(this).registerAll();
         this.executorMonoThread = Executors.newScheduledThreadPool(1);
         this.scheduledExecutorService = Executors.newScheduledThreadPool(16);
         this.scoreboardManager = new ScoreboardManager();
+        this.guiManager = new GuiManager();
+        this.schematicManager = new SchematicManager();
         getLogger().info("Starting CrystaliaUHC plugin...");
+        Bukkit.getScheduler().runTaskLater(this, () -> {
+            createWorld("world");
+            this.gameManager = new GameManager(this, this.mapManager.loadMap("world", 0, 0).generate(200));
+            Location location = new Location(Bukkit.getWorld("world"), 0.0D, 150.0D, 0.0D);
+            SchematicManager schematicManager = getSchematicManager();
+            Schematic centerSchematic = schematicManager
+                    .loadSchematic(schematicManager.getSchematicFromRessources("spawn.schematic"));
+            schematicManager.pasteSchematic(location.clone().add(-15, 0, -15), centerSchematic);
+            new Commands(this).registerAll();
+            new Listeners(this).registerAll();
+        }, 1L);
     }
 
     @Override
@@ -87,5 +112,17 @@ public class Main extends JavaPlugin {
             }
         }
         return path.delete();
+    }
+
+    public void createWorld(String worldName) {
+        this.getServer().createWorld(new WorldCreator(worldName));
+        for (World world : Bukkit.getWorlds()) {
+            world.setGameRuleValue("naturalRegeneration", "false");
+            world.setGameRuleValue("doFireTick", "false");
+            world.setGameRuleValue("reducedDebugInfo", "true");
+            world.setPVP(true);
+            world.setTime(0L);
+            world.setDifficulty(Difficulty.NORMAL);
+        }
     }
 }
