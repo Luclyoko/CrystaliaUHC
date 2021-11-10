@@ -20,7 +20,7 @@ public class MobsListeners implements Listener {
     public void onEntitySpawn(EntitySpawnEvent event) {
         if (event.isCancelled()) return;
 
-        if (!gameManager.isStarted()) {
+        if (!gameManager.isStarted() && event.getLocation().getBlockY() > 140) {
             event.setCancelled(true);
             return;
         }

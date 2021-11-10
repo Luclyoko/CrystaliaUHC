@@ -9,7 +9,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -28,25 +33,67 @@ public class PlayersListeners implements Listener {
         Player player = event.getPlayer();
         main.getScoreboardManager().onLogin(player);
 
-        event.setJoinMessage("§8(§a+§8) " + player.getName() + " [§9" + Bukkit.getOnlinePlayers().size() + "§8/§9" + "40" + "§8]");
-        player.teleport(new Location(Bukkit.getWorld("world"), 0.5, 155, 0.5));
+        event.setJoinMessage("§7(§a+§7) " + player.getName() + " [§3" + Bukkit.getOnlinePlayers().size() + "§8/§3" + main.getServer().getMaxPlayers() + "§7]");
+        player.teleport(new Location(gameManager.getGameWorld().getWorld(), 0.5, 160, 0.5));
         player.setGameMode(GameMode.ADVENTURE);
+        player.setDisplayName("§8» §r" + player.getName());
+
+        main.getPlayerManager().registerPlayer(player);
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
+        event.setQuitMessage("§7(§c-§7) " + player.getName() + " [§3" + Bukkit.getOnlinePlayers().size() + "§8/§3" + main.getServer().getMaxPlayers() + "§7]");
+
         main.getScoreboardManager().onLogout(player);
+
+        if (gameManager.isStarted()) main.getPlayerManager().getExactPlayer(player).setOnline(false);
+        else main.getPlayerManager().deletePlayer(player);
     }
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
         if (event.isCancelled()) return;
 
-        if (!gameManager.isStarted()) {
-            event.setCancelled(true);
-            return;
-        }
+        if (!gameManager.isStarted()) event.setCancelled(true);
+
+        if (event.getEntity() instanceof Player && !gameManager.getGameSettings().getInvincibility().hasTriggered()) event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onFoodLevelChange(FoodLevelChangeEvent event) {
+        if (event.isCancelled()) return;
+
+        if (!gameManager.isStarted()) event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
+        if (event.isCancelled()) return;
+
+        if (!(event.getDamager() instanceof Player && event.getEntity() instanceof Player)) return;
+
+        if (!gameManager.getGameSettings().getPvp().hasTriggered()) event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
+        event.setFormat(event.getPlayer().getDisplayName() + "§7: §r" + event.getMessage());
+    }
+
+    @EventHandler
+    public void onBlockPlace(BlockPlaceEvent event) {
+        if (event.isCancelled()) return;
+
+        if (!gameManager.isStarted()) event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent event) {
+        if (event.isCancelled()) return;
+
+        if (!gameManager.isStarted()) event.setCancelled(true);
     }
 }

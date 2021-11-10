@@ -10,4 +10,8 @@ public enum BleachPhase {
     BleachPhase(int phaseNumber) {
         this.phaseNumber = phaseNumber;
     }
+
+    public int getPhaseNumber() {
+        return phaseNumber;
+    }
 }

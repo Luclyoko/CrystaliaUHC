@@ -4,8 +4,11 @@ import fr.luclyoko.crystaliauhc.Main;
 import fr.luclyoko.crystaliauhc.game.GameManager;
 import fr.luclyoko.crystaliauhc.game.GameState;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 import java.util.UUID;
 
 /*
@@ -27,7 +30,7 @@ import java.util.UUID;
 public class PersonalScoreboard {
     private final Main main = Main.getInstance();
     private final GameManager gameManager = main.getGameManager();
-    private Player player;
+    private final Player player;
     private final UUID uuid;
     private final ObjectiveSign objectiveSign;
     private int lastShowedBoard = 0;
@@ -35,7 +38,7 @@ public class PersonalScoreboard {
     PersonalScoreboard(Player player){
         this.player = player;
         uuid = player.getUniqueId();
-        objectiveSign = new ObjectiveSign("sidebar", "BleachUHC");
+        objectiveSign = new ObjectiveSign("sidebar", "CrystaliaUHC");
 
         reloadData();
         objectiveSign.addReceiver(player);
@@ -45,20 +48,24 @@ public class PersonalScoreboard {
 
     public void setLines(String ip) {
         int i = 0;
-        objectiveSign.setDisplayName(gameManager.getGamemodeUhc().displayName);
-        objectiveSign.setLine(i++, "§1");
+        SimpleDateFormat timers = new SimpleDateFormat("mm:ss");
+        timers.setTimeZone(TimeZone.getTimeZone("GMT+1"));
+        SimpleDateFormat dateAndHour = new SimpleDateFormat("dd/MM/yy - HH:mm:ss");
+        dateAndHour.setTimeZone(TimeZone.getTimeZone("GMT+1"));
+        objectiveSign.setDisplayName(ChatColor.BOLD + gameManager.getGamemodeUhc().getDisplayName());
+        objectiveSign.setLine(i++, "§7§o" + dateAndHour.format(System.currentTimeMillis()));
         objectiveSign.setLine(i++, "§f§lINFOS");
-        objectiveSign.setLine(i, " §7» §cStatut: " + gameManager.getGameState().getScoreboardDisplay());
+        objectiveSign.setLine(i++, " §8» §aHost: §r" + gameManager.getGameSettings().getHostName());
+        objectiveSign.setLine(i, " §8» §cStatut: §r" + gameManager.getGameState().getScoreboardDisplay());
 
         switch (gameManager.getGameState()) {
             case PLAYING:
-                //TODO Ajouter timer quand il sera codé
-                objectiveSign.setLine(i++, " §7» §cTemps: ");
+                objectiveSign.setLine(i++, " §8» §cTimer: §r" + timers.format(gameManager.getGameTask().getTimer() * 1000));
                 break;
 
             case FINISHED:
                 //TODO Ajouter team victorieuse
-                objectiveSign.setLine(i++, " §7» §6Victoire: ");
+                objectiveSign.setLine(i++, " §8» §6Victoire: §r");
                 break;
             default:
                 i++;
@@ -66,16 +73,18 @@ public class PersonalScoreboard {
         }
 
         //TODO Ajouter nombre de joueurs / slots dispos
-        objectiveSign.setLine(i++, " §7» §cJoueurs: ");
+        objectiveSign.setLine(i++, " §8» §cJoueurs: §r");
         if (gameManager.getGameState().equals(GameState.PLAYING)) {
             objectiveSign.setLine(i++, "§2");
             objectiveSign.setLine(i++, "§f§lPARTIE");
-            for (String line : gameManager.getGamemodeUhc().getOptionalScoreboardLines()) {
+            objectiveSign.setLine(i++, " §8» §cPvP: §r" + (gameManager.getGameSettings().getPvp().hasTriggered() ? "§aActif" : timers.format((gameManager.getGameSettings().getPvp().getTriggerTime() - gameManager.getGameTask().getTimer()) *1000)));
+            for (String line : gameManager.getGamemodeUhc().getOptionalScoreboardLines(main.getPlayerManager().getExactPlayer(player))) {
                 objectiveSign.setLine(i++, line);
             }
             objectiveSign.setLine(i++, "§3");
             objectiveSign.setLine(i++, "§f§lBORDURE");
-            //TODO Ajouter infos bordure
+            objectiveSign.setLine(i++, " §8» §eTemps: §r" + timers.format((gameManager.getGameSettings().getBorder().getTriggerTime() - gameManager.getGameTask().getTimer()) *1000));
+            objectiveSign.setLine(i++, " §8» §eTaille: §r± " + (int) player.getWorld().getWorldBorder().getSize() / 2);
         }
         objectiveSign.setLine(i++, "§4");
         objectiveSign.setLine(i++, ip);

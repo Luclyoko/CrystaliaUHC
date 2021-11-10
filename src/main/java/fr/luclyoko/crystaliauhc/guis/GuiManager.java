@@ -1,6 +1,12 @@
 package fr.luclyoko.crystaliauhc.guis;
 
 import fr.luclyoko.crystaliauhc.Main;
+import fr.luclyoko.crystaliauhc.guis.adminguis.AdminMainGui;
+import fr.luclyoko.crystaliauhc.guis.adminguis.PlayerManagerGui;
+import fr.luclyoko.crystaliauhc.guis.devguis.DevMainGui;
+import fr.luclyoko.crystaliauhc.guis.hostguis.HostMainGui;
+import fr.luclyoko.crystaliauhc.guis.hostguis.scenariosguis.DiamondLimitGui;
+import fr.luclyoko.crystaliauhc.guis.hostguis.scenariosguis.ScenarioManagerGui;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,8 +33,12 @@ public class GuiManager implements Listener {
 
     private void loadGuis() {
         this.registeredMenus = new HashMap<>();
-        addMenu(new AdminGui());
-        addMenu(new DevGui());
+        addMenu(new AdminMainGui());
+        addMenu(new DevMainGui());
+        addMenu(new HostMainGui());
+        addMenu(new PlayerManagerGui());
+        addMenu(new ScenarioManagerGui());
+        addMenu(new DiamondLimitGui());
     }
 
     @EventHandler
@@ -47,7 +57,6 @@ public class GuiManager implements Listener {
                     menu.onClick(player, inv, current, event.getSlot(), clickType);
                     event.setCancelled(true);
                 });
-
     }
 
     public void addMenu(GuiBuilder m){

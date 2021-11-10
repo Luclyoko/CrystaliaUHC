@@ -1,7 +1,7 @@
 package fr.luclyoko.crystaliauhc.commands;
 
 import fr.luclyoko.crystaliauhc.Main;
-import fr.luclyoko.crystaliauhc.guis.AdminGui;
+import fr.luclyoko.crystaliauhc.guis.adminguis.AdminMainGui;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,7 +18,7 @@ public class AdminCommand implements CommandExecutor {
 
         Player player = (Player)sender;
 
-        main.getGuiManager().open(player, AdminGui.class);
+        main.getGuiManager().open(player, AdminMainGui.class);
 
         return true;
     }

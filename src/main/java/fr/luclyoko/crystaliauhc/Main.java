@@ -7,6 +7,7 @@ import fr.luclyoko.crystaliauhc.map.MapGenerator;
 import fr.luclyoko.crystaliauhc.map.MapManager;
 import fr.luclyoko.crystaliauhc.modules.Commands;
 import fr.luclyoko.crystaliauhc.modules.Listeners;
+import fr.luclyoko.crystaliauhc.players.PlayerManager;
 import fr.luclyoko.crystaliauhc.utils.schematics.Schematic;
 import fr.luclyoko.crystaliauhc.utils.schematics.SchematicManager;
 import fr.luclyoko.crystaliauhc.utils.scoreboard.ScoreboardManager;
@@ -48,7 +49,14 @@ public class Main extends JavaPlugin {
     }
 
     private SchematicManager schematicManager;
-    public SchematicManager getSchematicManager() {return schematicManager;}
+    public SchematicManager getSchematicManager() {
+        return schematicManager;
+    }
+
+    private PlayerManager playerManager;
+    public PlayerManager getPlayerManager() {
+        return playerManager;
+    }
 
     public Main () {
         instance = this;
@@ -67,15 +75,12 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        this.executorMonoThread = Executors.newScheduledThreadPool(1);
-        this.scheduledExecutorService = Executors.newScheduledThreadPool(16);
-        this.scoreboardManager = new ScoreboardManager();
         this.guiManager = new GuiManager();
         this.schematicManager = new SchematicManager();
         getLogger().info("Starting CrystaliaUHC plugin...");
         Bukkit.getScheduler().runTaskLater(this, () -> {
             createWorld("world");
-            this.gameManager = new GameManager(this, this.mapManager.loadMap("world", 0, 0).generate(200));
+            this.gameManager = new GameManager(this, this.mapManager.loadMap("world", 0, 0).generate(100));
             Location location = new Location(Bukkit.getWorld("world"), 0.0D, 150.0D, 0.0D);
             SchematicManager schematicManager = getSchematicManager();
             Schematic centerSchematic = schematicManager
@@ -83,6 +88,10 @@ public class Main extends JavaPlugin {
             schematicManager.pasteSchematic(location.clone().add(-15, 0, -15), centerSchematic);
             new Commands(this).registerAll();
             new Listeners(this).registerAll();
+            this.executorMonoThread = Executors.newScheduledThreadPool(1);
+            this.scheduledExecutorService = Executors.newScheduledThreadPool(16);
+            this.scoreboardManager = new ScoreboardManager();
+            this.playerManager = new PlayerManager(this);
         }, 1L);
     }
 

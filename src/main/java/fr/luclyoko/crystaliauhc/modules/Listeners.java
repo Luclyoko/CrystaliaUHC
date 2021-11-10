@@ -14,6 +14,6 @@ public class Listeners {
 
     public void registerAll() {
         main.getServer().getPluginManager().registerEvents(new PlayersListeners(main), main);
-        //main.getServer().getPluginManager().registerEvents(new MobsListeners(main), main);
+        main.getServer().getPluginManager().registerEvents(new MobsListeners(main), main);
     }
 }

@@ -10,7 +10,7 @@ commands:
   host:
     aliases:
       - h
-    usage: /host <config;op;deop;spec>
+    usage: /host <config>
     description: Commande de gestion de la partie.
     permission: crystaliauhc.host
     permission-message: Vous n'êtes pas autorisé à faire ceci!
@@ -42,7 +42,7 @@ permissions:
       crystaliauhc.dev: true
   crystaliauhc.host:
     description: Accès aux paramètres réservés aux hosts d'une partie.
-    default: false
+    default: op
   crystaliauhc.admin:
     description: Accès aux options réservées aux administrateurs du serveur.
     default: op

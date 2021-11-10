@@ -77,7 +77,7 @@ public class ScoreboardManager {
     }
 
     private String colorIpAt() {
-        String ip = "JavelUHC";
+        String ip = "Mugetsu";
 
         if (cooldown > 0) {
             cooldown--;

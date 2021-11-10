@@ -1,5 +1,6 @@
-package fr.luclyoko.crystaliauhc.guis;
+package fr.luclyoko.crystaliauhc.guis.devguis;
 
+import fr.luclyoko.crystaliauhc.guis.GuiBuilder;
 import fr.luclyoko.crystaliauhc.utils.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -7,13 +8,13 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Collections;
+import java.util.Arrays;
 
-public class DevGui implements GuiBuilder {
+public class DevMainGui implements GuiBuilder {
 
     @Override
     public String name() {
-        return "§aPanel de développement";
+        return "§2Panel de développement";
     }
 
     @Override
@@ -27,24 +28,28 @@ public class DevGui implements GuiBuilder {
             if (((i <= 8 || i >= getSize() - 9) ||
                     i % 9 == 0 || i % 9 == 8) &&
                     i != getSize() - 1) {
-                inv.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, (byte) 5)
+                inv.setItem(i, new ItemBuilder(Material.STAINED_GLASS_PANE, (byte) 13)
                         .setAmount(1)
-                        .setDisplayName("")
+                        .setDisplayName(" ")
                         .toItemStack());
             }
-
-            inv.setItem(10, new ItemBuilder(Material.COMMAND)
-                    .setAmount(1)
-                    .setDisplayName("§6Mode développement")
-                    .setLore(Collections.singletonList(main.getGameManager().getGameSettings().isDevMode() ? "§7Clic gauche | §c§lDésactiver" : "§7Clic gauche | §a§lActiver"))
-                    .toItemStack());
-
-            inv.setItem(getSize() - 1, new ItemBuilder(Material.ARROW)
-                    .setAmount(1)
-                    .setDisplayName("§cFermer le menu")
-                    .setLore(Collections.singletonList("§7Clic gauche | §a§lFermer"))
-                    .toItemStack());
         }
+
+        inv.setItem(10, new ItemBuilder(Material.COMMAND)
+                .setAmount(1)
+                .setDisplayName("§6Mode développement")
+                .setLore(Arrays.asList(" ",
+                        "§8» §7État: ".concat(main.getGameManager().getGameSettings().isDevMode() ? "§a§lActivé" : "§c§lDésactivé"),
+                        " ",
+                        main.getGameManager().getGameSettings().isDevMode() ? "§8» §7Clic gauche | §cDésactiver" : "§8» §7Clic gauche | §aActiver"))
+                .toItemStack());
+
+        inv.setItem(getSize() - 1, new ItemBuilder(Material.ARROW)
+                .setAmount(1)
+                .setDisplayName("§cFermer le menu")
+                .setLore(Arrays.asList(" ",
+                        "§8» §7Clic gauche | §aFermer"))
+                .toItemStack());
     }
 
     @Override
@@ -62,7 +67,7 @@ public class DevGui implements GuiBuilder {
 
             case ARROW:
                 player.closeInventory();
-                player.sendMessage("§aLes paramètres ont bien été sauvegardés.");
+                player.sendMessage(main.getGameManager().getGamemodeUhc().getDisplayNameChat() + "§aLes paramètres ont bien été sauvegardés.");
                 break;
 
             default:

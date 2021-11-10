@@ -2,7 +2,7 @@ package fr.luclyoko.crystaliauhc.game;
 
 import fr.luclyoko.crystaliauhc.Main;
 import fr.luclyoko.crystaliauhc.gamemodes.GamemodeUHC;
-import fr.luclyoko.crystaliauhc.gamemodes.vanilla.VanillaGamemodeUHC;
+import fr.luclyoko.crystaliauhc.gamemodes.vanilla.VanillaUHC;
 import fr.luclyoko.crystaliauhc.map.GameWorld;
 
 public class GameManager {
@@ -12,16 +12,20 @@ public class GameManager {
     private GamemodeUHC gamemodeUhc;
     private GameSettings gameSettings;
     private GameState gameState;
+    private StartTask startTask;
+    private GameTask gameTask;
     private boolean isStarted;
 
     public GameManager(Main main,
                        GameWorld gameWorld) {
         this.main = main;
         this.gameWorld = gameWorld;
-        this.gamemodeUhc = new VanillaGamemodeUHC(this);
-        this.gameSettings = new GameSettings(this);
+        this.gamemodeUhc = new VanillaUHC(this);
         this.gameState = GameState.LOADING;
+        this.gameSettings = new GameSettings(this);
         this.isStarted = false;
+        this.startTask = new StartTask(main, this);
+        this.gameTask = new GameTask(this);
     }
 
     public GameWorld getGameWorld() {
@@ -58,5 +62,17 @@ public class GameManager {
 
     public GameSettings getGameSettings() {
         return gameSettings;
+    }
+
+    public GameTask getGameTask() {
+        return gameTask;
+    }
+
+    public StartTask getStartTask() {
+        return startTask;
+    }
+
+    public void setStartTask(StartTask startTask) {
+        this.startTask = startTask;
     }
 }
