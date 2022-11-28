@@ -1,7 +1,5 @@
 package fr.luclyoko.crystaliauhc.game;
 
-import javax.annotation.Nullable;
-
 public enum GameState {
     LOADING("§eEn préparation..."),
     STARTING("§6Démarrage en cours..."),
@@ -15,6 +13,6 @@ public enum GameState {
     }
 
     public String getScoreboardDisplay() {
-        return scoreboardDisplay;
+        return this.scoreboardDisplay;
     }
-}
+    }

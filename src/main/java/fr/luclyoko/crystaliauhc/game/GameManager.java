@@ -6,30 +6,35 @@ import fr.luclyoko.crystaliauhc.gamemodes.vanilla.VanillaUHC;
 import fr.luclyoko.crystaliauhc.map.GameWorld;
 
 public class GameManager {
-
     private final Main main;
+
     private GameWorld gameWorld;
+
     private GamemodeUHC gamemodeUhc;
+
     private GameSettings gameSettings;
+
     private GameState gameState;
+
     private StartTask startTask;
+
     private GameTask gameTask;
+
     private boolean isStarted;
 
-    public GameManager(Main main,
-                       GameWorld gameWorld) {
+    public GameManager(Main main, GameWorld gameWorld) {
         this.main = main;
         this.gameWorld = gameWorld;
-        this.gamemodeUhc = new VanillaUHC(this);
+        this.gamemodeUhc = (GamemodeUHC)new VanillaUHC(main, this);
         this.gameState = GameState.LOADING;
-        this.gameSettings = new GameSettings(this);
+        this.gameSettings = new GameSettings(main, this);
         this.isStarted = false;
         this.startTask = new StartTask(main, this);
-        this.gameTask = new GameTask(this);
+        this.gameTask = new GameTask(main, this);
     }
 
     public GameWorld getGameWorld() {
-        return gameWorld;
+        return this.gameWorld;
     }
 
     public void setGameWorld(GameWorld gameWorld) {
@@ -37,15 +42,15 @@ public class GameManager {
     }
 
     public boolean isStarted() {
-        return isStarted;
+        return this.isStarted;
     }
 
     public void setStarted(boolean started) {
-        isStarted = started;
+        this.isStarted = started;
     }
 
     public GameState getGameState() {
-        return gameState;
+        return this.gameState;
     }
 
     public void setGameState(GameState gameState) {
@@ -53,7 +58,7 @@ public class GameManager {
     }
 
     public GamemodeUHC getGamemodeUhc() {
-        return gamemodeUhc;
+        return this.gamemodeUhc;
     }
 
     public void setGamemodeUhc(GamemodeUHC gamemodeUhc) {
@@ -61,15 +66,15 @@ public class GameManager {
     }
 
     public GameSettings getGameSettings() {
-        return gameSettings;
+        return this.gameSettings;
     }
 
     public GameTask getGameTask() {
-        return gameTask;
+        return this.gameTask;
     }
 
     public StartTask getStartTask() {
-        return startTask;
+        return this.startTask;
     }
 
     public void setStartTask(StartTask startTask) {

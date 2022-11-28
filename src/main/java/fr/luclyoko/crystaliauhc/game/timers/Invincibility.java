@@ -1,54 +1,56 @@
 package fr.luclyoko.crystaliauhc.game.timers;
 
+import fr.luclyoko.crystaliauhc.game.GameManager;
 import fr.luclyoko.crystaliauhc.timers.Timer;
-import org.bukkit.Bukkit;
-import org.bukkit.Sound;
-
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 
 public class Invincibility implements Timer {
+    GameManager gameManager;
 
     int invincibilityTime;
+
     boolean invincibility;
+
     List<Integer> remindTimers;
 
-    public Invincibility(int invincibilityTime) {
+    public Invincibility(GameManager gameManager, int invincibilityTime) {
+        this.gameManager = gameManager;
         this.invincibilityTime = invincibilityTime;
         this.invincibility = false;
-        this.remindTimers = Collections.singletonList(10);
+        this.remindTimers = Collections.singletonList(Integer.valueOf(10));
     }
 
-    @Override
     public int getTriggerTime() {
-        return invincibilityTime;
+        return this.invincibilityTime;
     }
 
-    @Override
     public List<Integer> getRemindTimers() {
-        return remindTimers;
+        return this.remindTimers;
     }
 
-    @Override
     public void setTriggerTime(int triggerTime) {
         this.invincibilityTime = triggerTime;
     }
 
-    @Override
     public void init() {
-        invincibility = true;
-        Bukkit.broadcastMessage(gameManager.getGamemodeUhc().getDisplayNameChat() + "§aLes dégâts sont désormais activés.");
-        Bukkit.getOnlinePlayers().forEach(player -> player.playSound(player.getLocation(), Sound.EXPLODE, 1f, 1f));
+        this.invincibility = true;
+        Bukkit.broadcastMessage(this.gameManager.getGamemodeUhc().getDisplayNameChat() + "§aLes dégâts sont désormais activés.");
+                Bukkit.getOnlinePlayers().forEach(player -> player.playSound(player.getLocation(), Sound.EXPLODE, 1.0F, 1.0F));
     }
 
-    @Override
     public void reminder(int remindTime) {
-        Bukkit.broadcastMessage(gameManager.getGamemodeUhc().getDisplayNameChat() + "§aActivation des dégâts dans §2" + (remindTime >= 60 ? remindTime / 60 + " §aminute(s)." : remindTime + " §aseconde(s)."));
+        Bukkit.broadcastMessage(this.gameManager.getGamemodeUhc().getDisplayNameChat() + "§aActivation des dégâts dans §2" + ((remindTime >= 60) ? ((remindTime / 60) + " §aminute(s)." ) : (remindTime + " §aseconde(s).")));
     }
 
-    @Override
     public boolean hasTriggered() {
-        return invincibility;
+        return this.invincibility;
+    }
+
+    public String getForceCommand() {
+        return "invincibility";
     }
 }

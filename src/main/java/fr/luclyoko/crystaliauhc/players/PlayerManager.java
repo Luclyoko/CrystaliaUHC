@@ -1,46 +1,55 @@
 package fr.luclyoko.crystaliauhc.players;
 
 import fr.luclyoko.crystaliauhc.Main;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.stream.Collectors;
 import org.bukkit.entity.Player;
 
-import java.util.*;
-
 public class PlayerManager {
-
     private Main main;
+
     private Map<UUID, CrystaliaPlayer> crystaliaPlayers;
-    private List<CrystaliaPlayer> gamePlayers;
 
     public PlayerManager(Main main) {
         this.main = main;
         this.crystaliaPlayers = new HashMap<>();
-        this.gamePlayers = new ArrayList<>();
     }
 
     public CrystaliaPlayer getExactPlayer(Player player) {
-        return crystaliaPlayers.get(player.getUniqueId());
+        return this.crystaliaPlayers.get(player.getUniqueId());
     }
 
     public void registerPlayer(Player player) {
-        CrystaliaPlayer crystaliaPlayer = new CrystaliaPlayer(player, main.getGameManager().getGameSettings().getSpecs().contains(player.getUniqueId()));
-        crystaliaPlayers.put(player.getUniqueId(), crystaliaPlayer);
-        updatePlayer(crystaliaPlayer);
+        CrystaliaPlayer crystaliaPlayer = new CrystaliaPlayer(this.main, this.main.getGameManager(), player, this.main.getGameManager().isStarted());
+        this.crystaliaPlayers.put(player.getUniqueId(), crystaliaPlayer);
     }
 
     public void deletePlayer(Player player) {
-        crystaliaPlayers.remove(player.getUniqueId());
+        CrystaliaPlayer crystaliaPlayer = getExactPlayer(player);
+        this.crystaliaPlayers.remove(player.getUniqueId());
     }
 
     public List<CrystaliaPlayer> getCrystaliaPlayers() {
-        return new ArrayList<>(crystaliaPlayers.values());
-    }
-
-    public void updatePlayer(CrystaliaPlayer crystaliaPlayer) {
-        if (!crystaliaPlayer.isSpec() && !gamePlayers.contains(crystaliaPlayer) && !crystaliaPlayer.isDead()) gamePlayers.add(crystaliaPlayer);
-        else if (crystaliaPlayer.isSpec() || crystaliaPlayer.isDead()) gamePlayers.remove(crystaliaPlayer);
+        return new ArrayList<>(this.crystaliaPlayers.values());
     }
 
     public List<CrystaliaPlayer> getGamePlayers() {
-        return gamePlayers;
+        return (List<CrystaliaPlayer>)this.crystaliaPlayers.values().stream().filter(crystaliaPlayer -> !crystaliaPlayer.isSpec()).collect(Collectors.toList());
+    }
+
+    public List<CrystaliaPlayer> getAliveGamePlayers() {
+        return (List<CrystaliaPlayer>)getGamePlayers().stream().filter(CrystaliaPlayer::isAlive).collect(Collectors.toList());
+    }
+
+    public List<CrystaliaPlayer> getOnlineGamePlayers() {
+        return (List<CrystaliaPlayer>)getGamePlayers().stream().filter(CrystaliaPlayer::isOnline).collect(Collectors.toList());
+    }
+
+    public List<CrystaliaPlayer> getOnlineAlivePlayers() {
+        return (List<CrystaliaPlayer>)getAliveGamePlayers().stream().filter(CrystaliaPlayer::isOnline).collect(Collectors.toList());
     }
 }

@@ -1,36 +1,37 @@
 package fr.luclyoko.crystaliauhc.commands;
 
 import fr.luclyoko.crystaliauhc.Main;
-import fr.luclyoko.crystaliauhc.game.GameState;
-import fr.luclyoko.crystaliauhc.gamemodes.bleach.BleachUHC;
-import fr.luclyoko.crystaliauhc.map.DiamondPopulator;
-import fr.luclyoko.crystaliauhc.map.GoldPopulator;
 import fr.luclyoko.crystaliauhc.map.MapGenerator;
+import java.util.Arrays;
+import java.util.List;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
-public class MapCommand implements CommandExecutor {
+public class MapCommand implements TabExecutor {
+    private final Main main;
 
-    private final Main main = Main.getInstance();
+    public MapCommand(Main main) {
+        this.main = main;
+    }
 
-    @Override
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
-        if (!(commandSender instanceof Player)) return false;
-
-        Player player = (Player) commandSender;
-
+        if (!(commandSender instanceof Player))
+            return false;
+        Player player = (Player)commandSender;
         if (args.length == 0 || Integer.parseInt(args[0]) <= 0) {
-            player.sendMessage(main.getGameManager().getGamemodeUhc().getDisplayNameChat() + "Veuillez préciser la taille à prégénérer !");
+            player.sendMessage(this.main.getGameManager().getGamemodeUhc().getDisplayNameChat() + "§cVeuillez préciser la taille prégénérer !");
             return false;
         }
-
-        new MapGenerator(Main.getInstance(), player.getWorld(), Integer.parseInt(args[0]), player.getLocation().getBlockX(), player.getLocation().getBlockZ());
-        player.getWorld().getPopulators().add(new DiamondPopulator());
-        player.getWorld().getPopulators().add(new GoldPopulator());
-        player.sendMessage(main.getGameManager().getGamemodeUhc().getDisplayNameChat() + "Démarrage de la prégénération du monde " + player.getWorld().getName() + "!");
-
+        new MapGenerator(this.main, player.getWorld(), Integer.parseInt(args[0]), player.getLocation().getBlockX(), player.getLocation().getBlockZ());
+        player.sendMessage(this.main.getGameManager().getGamemodeUhc().getDisplayNameChat() + "§aDémarrage de la prégénération du monde " + player.getWorld().getName() + " !");
         return true;
+    }
+
+    public List<String> onTabComplete(CommandSender sender, Command command, String s, String[] args) {
+        if (args.length == 1)
+            return Arrays.asList(new String[] { "100", "250", "500", "1000", "1500", "2000" });
+        return null;
     }
 }

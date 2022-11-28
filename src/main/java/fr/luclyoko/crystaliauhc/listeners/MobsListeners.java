@@ -7,8 +7,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntitySpawnEvent;
 
 public class MobsListeners implements Listener {
-
     private final Main main;
+
     private final GameManager gameManager;
 
     public MobsListeners(Main main) {
@@ -18,11 +18,9 @@ public class MobsListeners implements Listener {
 
     @EventHandler
     public void onEntitySpawn(EntitySpawnEvent event) {
-        if (event.isCancelled()) return;
-
-        if (!gameManager.isStarted() && event.getLocation().getBlockY() > 140) {
-            event.setCancelled(true);
+        if (event.isCancelled())
             return;
-        }
+        if (event.getLocation().getWorld().equals(this.main.getMapManager().getLobby()))
+            event.setCancelled(true);
     }
 }

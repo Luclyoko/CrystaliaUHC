@@ -1,68 +1,83 @@
 package fr.luclyoko.crystaliauhc.game.timers;
 
+import fr.luclyoko.crystaliauhc.game.GameManager;
 import fr.luclyoko.crystaliauhc.timers.Timer;
-import org.bukkit.Bukkit;
-import org.bukkit.Sound;
-
 import java.util.Arrays;
 import java.util.List;
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 
 public class Border implements Timer {
+    GameManager gameManager;
 
     int borderTime;
+
     boolean border;
+
     int borderInitialSize;
+
     int borderFinalSize;
+
     double borderSpeed;
+
     List<Integer> remindTimers;
 
-    public Border(int borderTime) {
+    public Border(GameManager gameManager, int borderTime) {
+        this.gameManager = gameManager;
         this.borderTime = borderTime;
         this.border = false;
         this.borderInitialSize = 1000;
         this.borderFinalSize = 250;
         this.borderSpeed = 0.5D;
-        this.remindTimers = Arrays.asList(30*60, 10*60, 5*60, 60, 30, 10, 5, 4, 3, 2, 1);
+        this.remindTimers = Arrays.asList(new Integer[] {
+                Integer.valueOf(1800),
+                Integer.valueOf(600),
+                Integer.valueOf(300),
+                Integer.valueOf(60),
+                Integer.valueOf(30),
+                Integer.valueOf(10),
+                Integer.valueOf(5),
+                Integer.valueOf(4),
+                Integer.valueOf(3),
+                Integer.valueOf(2),
+                Integer.valueOf(1) });
     }
 
-    @Override
     public int getTriggerTime() {
-        return borderTime;
+        return this.borderTime;
     }
 
-    @Override
     public List<Integer> getRemindTimers() {
-        return remindTimers;
+        return this.remindTimers;
     }
 
-    @Override
     public void setTriggerTime(int triggerTime) {
         this.borderTime = triggerTime;
-        this.border = false;
     }
 
-    @Override
     public void init() {
         this.border = true;
-        gameManager.getGameWorld().getWorldBorder().setSize(borderFinalSize * 2,
-                (long) ((borderInitialSize - borderFinalSize) / borderSpeed));
-        Bukkit.broadcastMessage(gameManager.getGamemodeUhc().getDisplayNameChat() + "§cLa bordure a commencé sa réduction jusqu'en " + borderFinalSize + "/" + borderFinalSize + " à la vitesse de " + borderSpeed + " bloc(s)/seconde.");
-        Bukkit.getOnlinePlayers().forEach(player -> player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1f, 1f));
+        this.gameManager.getGameWorld().getWorldBorder().setSize((this.borderFinalSize * 2), (long)((this.borderInitialSize - this.borderFinalSize) / this.borderSpeed));
+        Bukkit.broadcastMessage(this.gameManager.getGamemodeUhc().getDisplayNameChat() + "§cLa bordure a commencé sa réduction jusqu'en " + this.borderFinalSize + "/" + this.borderFinalSize + " à la vitesse de " + this.borderSpeed + " bloc(s)/seconde.");
+        Bukkit.getOnlinePlayers().forEach(player -> player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1.0F, 1.0F));
     }
 
-    @Override
     public void reminder(int remindTime) {
-        Bukkit.broadcastMessage(gameManager.getGamemodeUhc().getDisplayNameChat() + "§aRéduction de la bordure dans §2" + (remindTime >= 60 ? remindTime / 60 + " §aminute(s)." : remindTime + " §aseconde(s)."));
-        Bukkit.getOnlinePlayers().forEach(player -> player.playSound(player.getLocation(), Sound.NOTE_STICKS, 1f, 1f));
+        Bukkit.broadcastMessage(this.gameManager.getGamemodeUhc().getDisplayNameChat() + "§aRéduction de la bordure dans §2" + ((remindTime >= 60) ? ((remindTime / 60) + " §aminute(s)." ) : (remindTime + " §aseconde(s).")));
+        Bukkit.getOnlinePlayers().forEach(player -> player.playSound(player.getLocation(), Sound.NOTE_STICKS, 1.0F, 1.0F));
     }
 
-    @Override
     public boolean hasTriggered() {
-        return border;
+        return this.border;
+    }
+
+    public String getForceCommand() {
+        return "border";
     }
 
     public int getBorderInitialSize() {
-        return borderInitialSize;
+        return this.borderInitialSize;
     }
 
     public void setBorderInitialSize(int borderInitialSize) {
@@ -70,7 +85,7 @@ public class Border implements Timer {
     }
 
     public int getBorderFinalSize() {
-        return borderFinalSize;
+        return this.borderFinalSize;
     }
 
     public void setBorderFinalSize(int borderFinalSize) {
@@ -78,7 +93,7 @@ public class Border implements Timer {
     }
 
     public double getBorderSpeed() {
-        return borderSpeed;
+        return this.borderSpeed;
     }
 
     public void setBorderSpeed(double borderSpeed) {

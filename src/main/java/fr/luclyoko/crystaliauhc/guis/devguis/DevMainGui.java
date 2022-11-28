@@ -56,21 +56,12 @@ public class DevMainGui implements GuiBuilder {
     public void onClick(Player player, Inventory inv, ItemStack current, int slot, ClickType clickType) {
         switch (current.getType()) {
             case COMMAND:
-                if (main.getGameManager().getGameSettings().isDevMode()) {
-                    main.getGameManager().getGameSettings().setDevMode(false);
-                    main.getGuiManager().open(player, this.getClass());
-                } else {
-                    main.getGameManager().getGameSettings().setDevMode(true);
-                    main.getGuiManager().open(player, this.getClass());
-                }
+                main.getGameManager().getGameSettings().setDevMode(!main.getGameManager().getGameSettings().isDevMode());
+                main.getGuiManager().open(player, getClass());
                 break;
 
-            case ARROW:
+            case BARRIER:
                 player.closeInventory();
-                player.sendMessage(main.getGameManager().getGamemodeUhc().getDisplayNameChat() + "§aLes paramètres ont bien été sauvegardés.");
-                break;
-
-            default:
                 break;
         }
     }

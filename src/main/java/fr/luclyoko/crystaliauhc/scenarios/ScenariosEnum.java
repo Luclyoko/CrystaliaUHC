@@ -3,31 +3,33 @@ package fr.luclyoko.crystaliauhc.scenarios;
 import org.bukkit.Material;
 
 public enum ScenariosEnum {
-    DIAMOND_LIMIT(1,
-            new DiamondLimit(),
-            Material.DIAMOND);
+    DIAMOND_LIMIT(1, new DiamondLimit(), Material.DIAMOND),
+    CUTCLEAN(2, new Cutclean(), Material.IRON_ORE),
+    HASTEY_BOYS(3, new HasteyBoys(), Material.DIAMOND_PICKAXE),
+    HASTEY_BABIES(4, new HasteyBabies(), Material.STONE_PICKAXE),
+    SAFE_MINERS(5, new SafeMiners(), Material.ROTTEN_FLESH);
 
-    private int id;
-    private Scenario scenarioClass;
-    private Material displayItem;
+    private final int id;
 
-    ScenariosEnum(int id,
-                  Scenario scenarioClass,
-                  Material displayItem) {
+    private final Scenario scenarioClass;
+
+    private final Material displayItem;
+
+    ScenariosEnum(int id, Scenario scenarioClass, Material displayItem) {
         this.id = id;
         this.scenarioClass = scenarioClass;
         this.displayItem = displayItem;
     }
 
     public Scenario getScenarioClass() {
-        return scenarioClass;
+        return this.scenarioClass;
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public Material getDisplayItem() {
-        return displayItem;
+        return this.displayItem;
     }
 }
