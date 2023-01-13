@@ -65,6 +65,6 @@ public class Sanemi extends Slayer {
 
     @Override
     public List<String> getPowersDescriptionList() {
-        return Collections.singletonList("§e§lDispersion §o(usage unique) §8| §7Clic-droit : §fVous permet de téléporter aléatoirement sur la carte l'ensemble des joueurs en échange de §c2❤ permanents§f.");
+        return Collections.singletonList("§e§lDispersion §o(usage unique) §8| §7Clic-droit \n§fVous permet de téléporter aléatoirement sur la carte l'ensemble des joueurs en échange de §c2❤ permanents§f.");
     }
 }

@@ -66,6 +66,6 @@ public class Jigoro extends Slayer {
 
     @Override
     public List<String> getPowersDescriptionList() {
-        return Collections.singletonList("§e§lSouffle de la Foudre §o(cooldown: 4 minutes) §8| §7Clic-droit : §fVous permet d'obtenir l'effet §bSpeed 3 §fpendant 1 minute.");
+        return Collections.singletonList("§e§lSouffle de la Foudre §o(cooldown: 4 minutes) §8| §7Clic-droit \n§fVous permet d'obtenir l'effet §bSpeed 3 §fpendant 1 minute.");
     }
 }

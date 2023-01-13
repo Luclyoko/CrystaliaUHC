@@ -105,7 +105,7 @@ public class Tanjiro extends Slayer {
 
     @Override
     public List<String> getPowersDescriptionList() {
-        return Arrays.asList("§6§lDanse du Dieu du Feu §o(cooldown: 3min) §8| §7Clic-droit : §fVous permet d'obtenir les effets §bSpeed 1 §fet §bResistance 1 §fpendant 2 minutes.",
+        return Arrays.asList("§6§lDanse du Dieu du Feu §o(cooldown: 3min) §8| §7Clic-droit \n§fVous permet d'obtenir les effets §bSpeed 1 §fet §bResistance 1 §fpendant 2 minutes.",
                 "Si vous parvenez à tuer le démon §c§oassassin§f, vous gagnerez l'effet §bStrength 1 §fpermanent.");
     }
 }

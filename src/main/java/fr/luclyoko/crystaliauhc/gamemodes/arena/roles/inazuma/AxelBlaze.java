@@ -108,7 +108,7 @@ public class AxelBlaze extends ArenaRole {
 
     @Override
     public List<String> getPowersDescriptionList() {
-        return Arrays.asList("§6§lTornade de Feu §o(cooldown: 3 minutes) §8| §7Clic-droit : §fVous permet d'obtenir l'effet §bFire Resistance §fpendant 2 minutes ainsi que de §bvoler §ftant que vous n'avez pas reçu de coup d'épée.",
+        return Arrays.asList("§6§lTornade de Feu §o(cooldown: 3 minutes) §8| §7Clic-droit \n§fVous permet d'obtenir l'effet §bFire Resistance §fpendant 2 minutes ainsi que de §bvoler §ftant que vous n'avez pas reçu de coup d'épée.",
                 "Vous avez 10% de chance d'§benflammer §fvos adversaires lorsque vous les frappez.");
     }
 }

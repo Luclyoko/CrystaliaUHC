@@ -35,6 +35,6 @@ public abstract class Slayer extends ArenaRole {
 
     @Override
     public String getDescription() {
-        return "§7Votre rôle: §6§l" + getName() + (nichirinBlade != null ? " " + nichirinBlade.getColor() + nichirinBlade.getName() + " §8§o(" + nichirinBlade.getBonus() + ")" : "") + getEffectsDescription() + "\n \n§3§lPouvoirs:\n    §7• §f" + getPowersDescription();
+        return "§7Votre rôle: §6§l" + getName() + (nichirinBlade != null ? " " + nichirinBlade.getColor() + nichirinBlade.getName() + " §8§o(" + nichirinBlade.getBonus() + ")" : "") + getEffectsDescription() + "\n \n§3§lPouvoirs:" + getPowersDescription();
     }
 }

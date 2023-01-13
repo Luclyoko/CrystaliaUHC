@@ -143,7 +143,7 @@ public class Tengen extends Slayer {
 
     @Override
     public List<String> getPowersDescriptionList() {
-        return Arrays.asList("§b§lVitesse §o(cooldown: 1min30) §8| §7Clic-droit : §fVous permet de vous téléporter dans le dos d'un joueur que vous visez.",
-                "§6§lFumigène §o(cooldown: 2min) §8| §7Clic-droit : §fVous permet de donner l'effet §bBlindness §fet de rendre §binvincible §fpendant 10 secondes tous les joueurs dans un rayon de 20 blocs autour de vous.");
+        return Arrays.asList("§b§lVitesse §o(cooldown: 1min30) §8| §7Clic-droit \n§fVous permet de vous téléporter dans le dos d'un joueur que vous visez.",
+                "§6§lFumigène §o(cooldown: 2min) §8| §7Clic-droit \n§fVous permet de donner l'effet §bBlindness §fet de rendre §binvincible §fpendant 10 secondes tous les joueurs dans un rayon de 20 blocs autour de vous.");
     }
 }

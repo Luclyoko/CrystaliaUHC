@@ -82,7 +82,7 @@ public class MarkEvans extends ArenaRole {
 
     @Override
     public List<String> getPowersDescriptionList() {
-        return Arrays.asList("§e§lMain Céleste §o(cooldown: 4min) §8| §7Clic-droit : §fVous permet d'obtenir l'effet §bResistance 2 §fpendant 1 minute.",
+        return Arrays.asList("§e§lMain Céleste §o(cooldown: 4min) §8| §7Clic-droit \n§fVous permet d'obtenir l'effet §bResistance 2 §fpendant 1 minute.",
                 "Vous perdez un coeur permanent à la mort des rôles de l'univers d'Inazuma Eleven.");
     }
 }
