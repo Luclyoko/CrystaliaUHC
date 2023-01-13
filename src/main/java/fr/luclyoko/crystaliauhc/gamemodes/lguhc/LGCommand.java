@@ -9,14 +9,15 @@ import fr.luclyoko.crystaliauhc.gamemodes.lguhc.roles.village.Analyste;
 import fr.luclyoko.crystaliauhc.gamemodes.lguhc.roles.village.Pretresse;
 import fr.luclyoko.crystaliauhc.gamemodes.lguhc.roles.village.Sorciere;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
-import java.util.List;
-import java.util.Optional;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+
+import java.util.List;
+import java.util.Optional;
 
 public class LGCommand implements TabExecutor {
     private Main main;

@@ -5,8 +5,6 @@ import fr.luclyoko.crystaliauhc.game.GameManager;
 import fr.luclyoko.crystaliauhc.guis.hostguis.HostMainGui;
 import fr.luclyoko.crystaliauhc.guis.hostguis.enchantsguis.EnchantEditGui;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
-import java.util.Arrays;
-import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -14,6 +12,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class HostCommand implements TabExecutor {
     private final Main main;

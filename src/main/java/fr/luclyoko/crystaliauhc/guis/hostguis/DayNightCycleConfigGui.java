@@ -2,12 +2,13 @@ package fr.luclyoko.crystaliauhc.guis.hostguis;
 
 import fr.luclyoko.crystaliauhc.guis.GuiBuilder;
 import fr.luclyoko.crystaliauhc.utils.ItemBuilder;
-import java.util.Arrays;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Arrays;
 
 public class DayNightCycleConfigGui implements GuiBuilder {
     public String name() {

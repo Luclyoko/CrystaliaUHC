@@ -6,7 +6,6 @@ import fr.luclyoko.crystaliauhc.gamemodes.GamemodeUHC;
 import fr.luclyoko.crystaliauhc.gamemodes.UHCGamemodes;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 
 public class KwamiUHC extends GamemodeUHC {
     public KwamiUHC(Main main, GameManager gameManager) {

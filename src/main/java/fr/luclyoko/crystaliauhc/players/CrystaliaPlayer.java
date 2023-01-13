@@ -4,13 +4,15 @@ import fr.luclyoko.crystaliauhc.Main;
 import fr.luclyoko.crystaliauhc.game.GameManager;
 import fr.luclyoko.crystaliauhc.gamemodes.CrystaliaRole;
 import fr.luclyoko.crystaliauhc.teams.Team;
-import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scoreboard.Scoreboard;
+
+import java.util.UUID;
 
 public class CrystaliaPlayer {
     private Main main;
@@ -39,6 +41,8 @@ public class CrystaliaPlayer {
 
     private Location deathLocation;
 
+    private Scoreboard scoreboard;
+
     public CrystaliaPlayer(Main main, GameManager gameManager, Player player, boolean isSpec) {
         this.main = main;
         this.gameManager = gameManager;
@@ -50,6 +54,7 @@ public class CrystaliaPlayer {
         this.isMod = false;
         this.isAlive = true;
         this.deathLocation = null;
+        this.scoreboard = main.getServer().getScoreboardManager().getNewScoreboard();
     }
 
     public UUID getPlayerUUID() {
@@ -149,7 +154,7 @@ public class CrystaliaPlayer {
         if (isOnline()) {
             PlayerInventory playerInv = getPlayer().getInventory();
             if (playerInv.firstEmpty() != -1) {
-                playerInv.addItem(new ItemStack[] { itemStack });
+                playerInv.addItem(itemStack);
             } else {
                 getPlayer().getWorld().dropItem(getPlayer().getLocation().add(0.0D, 0.5D, 0.0D), itemStack);
             }
@@ -164,5 +169,9 @@ public class CrystaliaPlayer {
         this.isMod = isMod;
         if (!this.gameManager.isStarted())
             this.isSpec = isMod;
+    }
+
+    public Scoreboard getScoreboard() {
+        return scoreboard;
     }
 }

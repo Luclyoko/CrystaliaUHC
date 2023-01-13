@@ -2,13 +2,6 @@ package fr.luclyoko.crystaliauhc.utils;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.banner.Pattern;
@@ -20,6 +13,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionType;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 public class ItemBuilder {
     private ItemStack itemStack;

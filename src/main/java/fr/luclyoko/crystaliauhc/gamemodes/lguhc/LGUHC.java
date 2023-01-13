@@ -20,23 +20,11 @@ import fr.luclyoko.crystaliauhc.guis.hostguis.gamemodesguis.lgguis.LGMainGui;
 import fr.luclyoko.crystaliauhc.map.GameWorld;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
 import fr.luclyoko.crystaliauhc.timers.Timer;
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-import java.util.TimeZone;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
@@ -47,6 +35,10 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class LGUHC extends GamemodeUHC {
     private final LGRolesManager rolesManager;
@@ -99,7 +91,7 @@ public class LGUHC extends GamemodeUHC {
                 aliveSides.add(playerSide);
         }
         if (aliveSides.size() == 1)
-            finish(((LGSides)aliveSides.get(0)).getDisplayName());
+            finish(aliveSides.get(0).getDisplayName());
     }
 
     public void finish(String winner) {
@@ -120,7 +112,7 @@ public class LGUHC extends GamemodeUHC {
             msg.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(events.toString())).create()));
             Bukkit.getOnlinePlayers().forEach(player -> player.spigot().sendMessage((BaseComponent)msg));
         }
-        Bukkit.getOnlinePlayers().forEach(player -> this.main.getTitle().sendTitle(player, Integer.valueOf(20), Integer.valueOf(60), Integer.valueOf(20), "§6Fin de la partie !", "§aVictoire de: §f§l" + winner));
+        Bukkit.getOnlinePlayers().forEach(player -> this.main.getTitle().sendTitle(player, 20, 60, 20, "§6Fin de la partie !", "§aVictoire de: §f§l" + winner));
         this.gameManager.getGameSettings().setWinner(winner);
     }
 

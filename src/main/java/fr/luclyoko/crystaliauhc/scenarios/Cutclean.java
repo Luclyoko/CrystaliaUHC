@@ -2,11 +2,6 @@ package fr.luclyoko.crystaliauhc.scenarios;
 
 import fr.luclyoko.crystaliauhc.guis.GuiBuilder;
 import fr.luclyoko.crystaliauhc.utils.ItemBuilder;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
-import javax.annotation.Nullable;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ExperienceOrb;
@@ -17,6 +12,12 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
+
+import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 public class Cutclean implements Scenario, Listener {
     private boolean isEnabled;

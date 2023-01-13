@@ -11,7 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class Assassin extends LGRoleSolitaires {
@@ -27,8 +26,8 @@ public class Assassin extends LGRoleSolitaires {
                 if (event.isCancelled())
                     return;
                 if (event.getKiller() != null && event.getKiller().equals(Assassin.this.crystaliaPlayer)) {
-                    Assassin.this.addTempEffect(new PotionEffect(PotionEffectType.SPEED, 1200, 0, false, false));
-                    Assassin.this.addTempEffect(new PotionEffect(PotionEffectType.ABSORPTION, 1200, 0, false, false));
+                    Assassin.this.addTempEffect(PotionEffectType.SPEED, 0, 1200, false);
+                    Assassin.this.addTempEffect(PotionEffectType.ABSORPTION, 0, 1200, false);
                 }
             }
         };

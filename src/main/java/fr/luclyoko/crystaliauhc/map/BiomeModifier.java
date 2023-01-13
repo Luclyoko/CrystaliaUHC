@@ -1,8 +1,11 @@
 package fr.luclyoko.crystaliauhc.map;
 
-import org.bukkit.*;
-import java.util.*;
-import java.lang.reflect.*;
+import org.bukkit.Bukkit;
+
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 public class BiomeModifier
 {

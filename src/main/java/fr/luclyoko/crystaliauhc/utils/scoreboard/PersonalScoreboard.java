@@ -3,13 +3,13 @@ package fr.luclyoko.crystaliauhc.utils.scoreboard;
 import fr.luclyoko.crystaliauhc.Main;
 import fr.luclyoko.crystaliauhc.game.GameManager;
 import fr.luclyoko.crystaliauhc.game.GameState;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 import java.util.UUID;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 
 public class PersonalScoreboard {
     private final Main main = Main.getInstance();
@@ -29,7 +29,7 @@ public class PersonalScoreboard {
         this.uuid = player.getUniqueId();
         this.objectiveSign = new ObjectiveSign("sidebar", "CrystaliaUHC");
         reloadData();
-        this.objectiveSign.addReceiver((OfflinePlayer)player);
+        this.objectiveSign.addReceiver(player);
     }
 
     public void reloadData() {}
@@ -52,7 +52,7 @@ public class PersonalScoreboard {
                 this.objectiveSign.setLine(i++, " §8» §cMode: §r" + this.gameManager.getGamemodeUhc().getDefaultName());
                 break;
             case PLAYING:
-                this.objectiveSign.setLine(i++, " §8» §cTimer: §r" + timers.format(this.gameManager.getGameTask().getTimer() * 1000));
+                this.objectiveSign.setLine(i++, " §8» §cTimer: §r" + timers.format(this.gameManager.getGameTask().getTimer() * 1000) + (this.gameManager.getGameSettings().isDay() ? " §7(§e§lJour§7)" : " §7(§8§lNuit§7)"));
                 break;
             case FINISHED:
                 this.objectiveSign.setLine(i++, " §8» §cDurée: §r" + timers.format(this.gameManager.getGameTask().getTimer() * 1000));

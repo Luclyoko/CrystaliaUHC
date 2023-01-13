@@ -1,7 +1,6 @@
 package fr.luclyoko.crystaliauhc.scenarios;
 
 import fr.luclyoko.crystaliauhc.Main;
-import fr.luclyoko.crystaliauhc.game.GameManager;
 import fr.luclyoko.crystaliauhc.guis.GuiBuilder;
 
 import javax.annotation.Nullable;

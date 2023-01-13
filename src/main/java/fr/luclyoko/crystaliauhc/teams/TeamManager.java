@@ -4,11 +4,6 @@ import fr.luclyoko.crystaliauhc.Main;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
 import fr.luclyoko.crystaliauhc.utils.ItemBuilder;
 import fr.luclyoko.crystaliauhc.utils.scoreboard.ScoreboardTeam;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 import net.minecraft.server.v1_8_R3.Packet;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
@@ -19,6 +14,8 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.*;
 
 public class TeamManager {
     private Main main;
@@ -48,7 +45,7 @@ public class TeamManager {
 
     public void resetTeams() {
         this.teams.forEach(team -> {
-            //team.getMembers().forEach(());
+            team.getMembers().forEach(crystaliaPlayer -> crystaliaPlayer.setTeam(null));
             team.getMembers().clear();
         });
         refreshTeams();

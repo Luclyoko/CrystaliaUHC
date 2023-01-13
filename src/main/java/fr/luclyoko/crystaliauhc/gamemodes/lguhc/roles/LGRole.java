@@ -1,6 +1,5 @@
 package fr.luclyoko.crystaliauhc.gamemodes.lguhc.roles;
 
-import fr.luclyoko.crystaliauhc.Main;
 import fr.luclyoko.crystaliauhc.game.GameManager;
 import fr.luclyoko.crystaliauhc.gamemodes.CrystaliaRole;
 import fr.luclyoko.crystaliauhc.gamemodes.customevents.GamePlayerDefinitiveDeathEvent;
@@ -9,16 +8,16 @@ import fr.luclyoko.crystaliauhc.gamemodes.lguhc.lgevents.LGNewLoupEvent;
 import fr.luclyoko.crystaliauhc.gamemodes.lguhc.lgevents.LGRevealListeLoupsEvent;
 import fr.luclyoko.crystaliauhc.gamemodes.lguhc.lgevents.LGSideChangeEvent;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
-import java.util.ArrayList;
-import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class LGRole extends CrystaliaRole {
     protected LGUHC lguhc;
@@ -49,8 +48,8 @@ public abstract class LGRole extends CrystaliaRole {
                 LGRole.this.listeLoups.remove(event.getCrystaliaPlayer().getPlayerName());
                 if (LGRole.this.isLoup &&
                         event.getKiller() != null && event.getKiller().equals(LGRole.this.crystaliaPlayer)) {
-                    LGRole.this.addTempEffect(new PotionEffect(PotionEffectType.SPEED, 1200, 0, false, false));
-                    LGRole.this.addTempEffect(new PotionEffect(PotionEffectType.ABSORPTION, 1200, 0, false, false));
+                    LGRole.this.addTempEffect(PotionEffectType.SPEED, 0, 1200, false);
+                    LGRole.this.addTempEffect(PotionEffectType.ABSORPTION, 0, 1200, false);
                 }
             }
 
@@ -144,7 +143,7 @@ public abstract class LGRole extends CrystaliaRole {
         if (loup) {
             addNightEffect(PotionEffectType.INCREASE_DAMAGE, 0);
             addPermEffect(PotionEffectType.NIGHT_VISION, 0);
-            Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin)this.main, () -> this.main.getServer().getPluginManager().callEvent((Event)new LGNewLoupEvent(this.crystaliaPlayer)), 20L);
+            Bukkit.getScheduler().runTaskLaterAsynchronously(this.main, () -> this.main.getServer().getPluginManager().callEvent((Event)new LGNewLoupEvent(this.crystaliaPlayer)), 20L);
         }
     }
 

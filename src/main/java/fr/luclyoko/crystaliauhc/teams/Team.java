@@ -3,9 +3,10 @@ package fr.luclyoko.crystaliauhc.teams;
 import fr.luclyoko.crystaliauhc.Main;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
 import fr.luclyoko.crystaliauhc.utils.scoreboard.ScoreboardTeam;
+import org.bukkit.Location;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.bukkit.Location;
 
 public class Team {
     private Main main;

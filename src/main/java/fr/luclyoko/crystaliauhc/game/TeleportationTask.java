@@ -5,19 +5,15 @@ import fr.luclyoko.crystaliauhc.game.timers.Border;
 import fr.luclyoko.crystaliauhc.gamemodes.customevents.GameStartingEvent;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
 import fr.luclyoko.crystaliauhc.teams.Team;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import org.bukkit.Bukkit;
-import org.bukkit.Difficulty;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class TeleportationTask extends BukkitRunnable {
     private Main main;
@@ -77,19 +73,19 @@ public class TeleportationTask extends BukkitRunnable {
             Bukkit.broadcastMessage(this.gameManager.getGamemodeUhc().getDisplayNameChat() + "§aLa partie commence, bonne chance à tous.");
             Bukkit.getOnlinePlayers().forEach(player -> {
                 player.playSound(player.getLocation(), Sound.WITHER_SPAWN, 1.0F, 1.0F);
-                this.main.getTitle().sendTitle(player, Integer.valueOf(20), Integer.valueOf(30), Integer.valueOf(20), this.gameManager.getGamemodeUhc().getDisplayName(), "§aDébut de la partie !");
+                this.main.getTitle().sendTitle(player, 20, 30, 20, this.gameManager.getGamemodeUhc().getDisplayName(), "§aDébut de la partie !");
             });
             this.gameManager.setGameState(GameState.PLAYING);
             this.gameManager.setStarted(true);
             this.main.getMapManager().unloadSpawnSchematic();
-            this.main.getServer().getPluginManager().callEvent((Event)new GameStartingEvent());
+            this.main.getServer().getPluginManager().callEvent(new GameStartingEvent());
             this.gameManager.getGameTask().init();
             cancel();
         }
     }
 
     public static Location generateRandomLocation() {
-        Random random = new Random(System.currentTimeMillis());
+        Random random = new Random();
         GameManager gameManager = Main.getInstance().getGameManager();
         boolean xSign = random.nextBoolean();
         boolean zSign = random.nextBoolean();

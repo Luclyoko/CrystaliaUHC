@@ -1,14 +1,11 @@
 package fr.luclyoko.crystaliauhc.gamemodes.lguhc.roles.village;
 
-import fr.luclyoko.crystaliauhc.Main;
 import fr.luclyoko.crystaliauhc.game.GameManager;
 import fr.luclyoko.crystaliauhc.gamemodes.customevents.GamePlayerDeathEvent;
 import fr.luclyoko.crystaliauhc.gamemodes.lguhc.lgevents.LGSorciereRezEvent;
 import fr.luclyoko.crystaliauhc.gamemodes.lguhc.roles.LGRole;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
 import fr.luclyoko.crystaliauhc.utils.ItemBuilder;
-import java.util.ArrayList;
-import java.util.List;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -18,6 +15,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Sorciere extends LGRoleVillage {
     private boolean hasUsedRez;
@@ -65,7 +65,7 @@ public class Sorciere extends LGRoleVillage {
         crystaliaPlayer.giveItem((new ItemBuilder(Material.POTION)).setPotionMeta(PotionType.REGEN, true).toItemStack());
         crystaliaPlayer.giveItem((new ItemBuilder(Material.POTION)).setPotionMeta(PotionType.INSTANT_DAMAGE, true).setAmount(2).toItemStack());
         crystaliaPlayer.giveItem((new ItemBuilder(Material.POTION)).setPotionMeta(PotionType.STRENGTH, true).toItemStack());
-        this.main.getServer().getPluginManager().registerEvents(this.sorciere, (Plugin)this.main);
+        this.main.getServer().getPluginManager().registerEvents(this.sorciere, this.main);
     }
 
     public String getPowersDescription() {

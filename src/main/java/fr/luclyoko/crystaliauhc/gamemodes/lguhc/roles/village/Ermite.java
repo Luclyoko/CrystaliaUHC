@@ -1,6 +1,5 @@
 package fr.luclyoko.crystaliauhc.gamemodes.lguhc.roles.village;
 
-import fr.luclyoko.crystaliauhc.Main;
 import fr.luclyoko.crystaliauhc.game.GameManager;
 import fr.luclyoko.crystaliauhc.gamemodes.customevents.GamePlayerDefinitiveDeathEvent;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
@@ -12,7 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class Ermite extends LGRoleVillage {
@@ -35,12 +33,12 @@ public class Ermite extends LGRoleVillage {
                     }
                 }
                 if (playersAround >= 5) {
-                    addTempEffect(new PotionEffect(PotionEffectType.WEAKNESS, 60, 0, false, false));
+                    addTempEffect(PotionEffectType.WEAKNESS, 0, 60, false);
                 } else {
                     if (this.gameManager.getGameSettings().isDay()) {
-                        addTempEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false));
+                        addTempEffect(PotionEffectType.INCREASE_DAMAGE, 0, 60, false);
                     } else {
-                        addTempEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false));
+                        addTempEffect(PotionEffectType.DAMAGE_RESISTANCE, 0, 60, false);
                     }
                     if (playersAround == 1) {
                         this.crystaliaPlayer.getPlayer().setWalkSpeed(0.22F);
@@ -71,7 +69,7 @@ public class Ermite extends LGRoleVillage {
         };
         setName("Ermite");
         this.main.getServer().getPluginManager().registerEvents(this.ermiteListener, (Plugin)this.main);
-        Bukkit.getScheduler().runTaskTimer((Plugin)this.main, this.ermiteTask, 40L, 20L);
+        Bukkit.getScheduler().runTaskTimer(this.main, this.ermiteTask, 40L, 20L);
     }
 
     public String getPowersDescription() {

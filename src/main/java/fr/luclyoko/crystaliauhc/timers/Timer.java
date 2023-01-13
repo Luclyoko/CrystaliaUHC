@@ -1,6 +1,7 @@
 package fr.luclyoko.crystaliauhc.timers;
 
 import fr.luclyoko.crystaliauhc.Main;
+
 import java.util.List;
 
 public interface Timer {
@@ -10,7 +11,7 @@ public interface Timer {
 
     void setTriggerTime(int paramInt);
 
-    void init();
+    void init(boolean sound);
 
     void reminder(int paramInt);
 

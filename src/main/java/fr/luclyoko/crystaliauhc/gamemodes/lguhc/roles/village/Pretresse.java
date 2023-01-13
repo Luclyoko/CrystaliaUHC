@@ -1,21 +1,20 @@
 package fr.luclyoko.crystaliauhc.gamemodes.lguhc.roles.village;
 
-import fr.luclyoko.crystaliauhc.Main;
 import fr.luclyoko.crystaliauhc.game.GameManager;
 import fr.luclyoko.crystaliauhc.gamemodes.customevents.GamePlayerDefinitiveDeathEvent;
 import fr.luclyoko.crystaliauhc.gamemodes.lguhc.lgevents.LGEspionnageEvent;
 import fr.luclyoko.crystaliauhc.gamemodes.lguhc.roles.LGRole;
-import fr.luclyoko.crystaliauhc.gamemodes.lguhc.roles.LGSides;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
 import fr.luclyoko.crystaliauhc.utils.ItemBuilder;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Pretresse extends LGRoleVillage {
     private List<CrystaliaPlayer> spiedLoups;

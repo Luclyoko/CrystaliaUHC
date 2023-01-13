@@ -10,11 +10,11 @@ import fr.luclyoko.crystaliauhc.teams.TeamManager;
 import fr.luclyoko.crystaliauhc.utils.Title;
 import fr.luclyoko.crystaliauhc.utils.schematics.SchematicManager;
 import fr.luclyoko.crystaliauhc.utils.scoreboard.ScoreboardManager;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
     private static Main instance;
@@ -88,7 +88,7 @@ public class Main extends JavaPlugin {
         this.guiManager = new GuiManager(this);
         this.schematicManager = new SchematicManager();
         getLogger().info("Starting CrystaliaUHC plugin...");
-        Bukkit.getScheduler().runTaskLater((Plugin)this, () -> {
+        Bukkit.getScheduler().runTaskLater(this, () -> {
             this.mapManager.createLobby();
             this.gameManager = new GameManager(this, this.mapManager.loadMap("gameworld", 0, 0, null));
             (new Commands(this)).registerAll();

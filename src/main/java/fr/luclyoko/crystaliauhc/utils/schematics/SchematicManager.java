@@ -1,12 +1,13 @@
 package fr.luclyoko.crystaliauhc.utils.schematics;
 
-import java.io.InputStream;
 import net.minecraft.server.v1_8_R3.NBTCompressedStreamTools;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+
+import java.io.InputStream;
 
 public class SchematicManager {
 

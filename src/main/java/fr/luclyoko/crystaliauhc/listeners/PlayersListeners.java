@@ -2,6 +2,9 @@ package fr.luclyoko.crystaliauhc.listeners;
 
 import fr.luclyoko.crystaliauhc.Main;
 import fr.luclyoko.crystaliauhc.game.GameManager;
+import fr.luclyoko.crystaliauhc.gamemodes.UHCGamemodes;
+import fr.luclyoko.crystaliauhc.gamemodes.arena.ArenaUHC;
+import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.ArenaRole;
 import fr.luclyoko.crystaliauhc.gamemodes.customevents.GamePlayerDefinitiveDeathEvent;
 import fr.luclyoko.crystaliauhc.guis.teamsguis.TeamSelectorGui;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
@@ -10,7 +13,6 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -22,11 +24,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.AnvilInventory;
@@ -68,12 +66,21 @@ public class PlayersListeners implements Listener {
                 }
             }).runTaskLater((Plugin)this.main, 1L);
             CrystaliaPlayer crystaliaPlayer = this.main.getPlayerManager().getExactPlayer(player);
+            player.setScoreboard(crystaliaPlayer.getScoreboard());
             if (this.main.getTeamManager().getTeamsSize() > 1)
                 player.getInventory().setItem(0, this.main.getTeamManager().getTeamsBannerSelection(crystaliaPlayer));
         } else {
             if (!this.main.getPlayerManager().getCrystaliaPlayers().contains(this.main.getPlayerManager().getExactPlayer(player)))
                 this.main.getPlayerManager().registerPlayer(player);
             CrystaliaPlayer crystaliaPlayer = this.main.getPlayerManager().getExactPlayer(player);
+            player.setScoreboard(crystaliaPlayer.getScoreboard());
+            if (gameManager.getGamemodeUhc().getGamemodeEnum().equals(UHCGamemodes.ARENA)) {
+                crystaliaPlayer.setAlive(true);
+                ((ArenaUHC)gameManager.getGamemodeUhc()).getArenaRolesManager().pickRole(crystaliaPlayer, false);
+                player.setHealth(0);
+                event.setJoinMessage("§7(§a+§7) " + player.getName() + " [§3" + Bukkit.getOnlinePlayers().size() + "§8/§3" + this.gameManager.getGameSettings().getSlots() + "§7]");
+                return;
+            }
             if (crystaliaPlayer.isSpec() || !crystaliaPlayer.isAlive()) {
                 event.setJoinMessage("§7(§a+§7) " + player.getName() + " [§3" + Bukkit.getOnlinePlayers().size() + "§8/§3" + this.gameManager.getGameSettings().getSlots() + "§7]");
                 (new BukkitRunnable() {
@@ -88,7 +95,7 @@ public class PlayersListeners implements Listener {
                         player.getInventory().setArmorContents(new ItemStack[4]);
                         player.sendMessage(PlayersListeners.this.main.getGameManager().getGamemodeUhc().getDisplayNameChat() + "§aLa partie a déjà commencé, vous avez donc été placé en spectateur.");
                     }
-                }).runTaskLater((Plugin)this.main, 1L);
+                }).runTaskLater(this.main, 1L);
             } else {
                 event.setJoinMessage("§7(§a+§7) " + player.getName() + " s'est reconnecté [§3" + Bukkit.getOnlinePlayers().size() + "§8/§3" + this.gameManager.getGameSettings().getSlots() + "§7]");
                         crystaliaPlayer.getIdleTask().cancel();
@@ -104,7 +111,7 @@ public class PlayersListeners implements Listener {
         if (!this.gameManager.isStarted()) {
             event.setQuitMessage("§7(§c-§7) " + player.getName() + " [§3" + Bukkit.getOnlinePlayers().size() + "§8/§3" + this.gameManager.getGameSettings().getSlots() + "§7]");
             this.main.getPlayerManager().deletePlayer(player);
-        } else {
+        } else if (!gameManager.getGamemodeUhc().getGamemodeEnum().equals(UHCGamemodes.ARENA)) {
             final CrystaliaPlayer crystaliaPlayer = this.main.getPlayerManager().getExactPlayer(player);
             if (crystaliaPlayer.isAlive()) {
                 event.setQuitMessage("§7(§c-§7) " + player.getName() + " s'est déconnecté, il a §3" + (this.gameManager.getGameSettings().getIdleTime() / 60) + " §7minute(s) pour se reconnecter [§3" + (Bukkit.getOnlinePlayers().size() - 1) + "§8/§3" + this.gameManager.getGameSettings().getSlots() + "§7]");
@@ -114,13 +121,23 @@ public class PlayersListeners implements Listener {
                 crystaliaPlayer.setIdleTask(new BukkitRunnable() {
                     public void run() {
                         crystaliaPlayer.setAlive(false);
-                        PlayersListeners.this.main.getServer().getPluginManager().callEvent((Event)new GamePlayerDefinitiveDeathEvent(crystaliaPlayer, null));
+                        PlayersListeners.this.main.getServer().getPluginManager().callEvent(new GamePlayerDefinitiveDeathEvent(crystaliaPlayer, null));
                     }
                 });
                 crystaliaPlayer.getIdleTask().runTaskLater((Plugin)this.main, this.gameManager.getGameSettings().getIdleTime() * 20L);
             } else {
                 event.setQuitMessage("§7(§c-§7) " + player.getName() + " [§3" + Bukkit.getOnlinePlayers().size() + "§8/§3" + this.gameManager.getGameSettings().getSlots() + "§7]");
             }
+        } else {
+            final CrystaliaPlayer crystaliaPlayer = this.main.getPlayerManager().getExactPlayer(player);
+            if (crystaliaPlayer.getRole() != null && crystaliaPlayer.getRole() instanceof ArenaRole) {
+                ArenaRole arenaRole = (ArenaRole) crystaliaPlayer.getRole();
+                ((ArenaUHC)gameManager.getGamemodeUhc()).getArenaRolesManager().addForcedRole(crystaliaPlayer, arenaRole.getArenaRolesEnum());
+                arenaRole.resetEffects();
+                crystaliaPlayer.setRole(null);
+                crystaliaPlayer.setAlive(false);
+            }
+            event.setQuitMessage("§7(§c-§7) " + player.getName() + " [§3" + Bukkit.getOnlinePlayers().size() + "§8/§3" + this.gameManager.getGameSettings().getSlots() + "§7]");
         }
         this.main.getTeamManager().refreshTeams();
     }
@@ -250,7 +267,11 @@ public class PlayersListeners implements Listener {
             for (PotionEffect activePotionEffect : player.getActivePotionEffects()) {
                 if (activePotionEffect.getType().equals(PotionEffectType.INCREASE_DAMAGE)) {
                     int strengthPercent = this.gameManager.getGameSettings().getStrengthPercent() * (activePotionEffect.getAmplifier() + 1);
-                    event.setDamage(event.getDamage() / 1.2999999523162842D * (1.0F + strengthPercent / 100.0F));
+                    final CrystaliaPlayer crystaliaPlayer = this.main.getPlayerManager().getExactPlayer(player);
+                    if (crystaliaPlayer.getRole() != null) {
+                        strengthPercent += crystaliaPlayer.getRole().getSelfStrengthPercent();
+                    }
+                    event.setDamage(event.getDamage() / 2.299999952316284D * (1.0F + strengthPercent / 100.0F));
                 }
             }
         }
@@ -259,7 +280,13 @@ public class PlayersListeners implements Listener {
             for (PotionEffect activePotionEffect : player.getActivePotionEffects()) {
                 if (activePotionEffect.getType().equals(PotionEffectType.DAMAGE_RESISTANCE)) {
                     int resiPercent = this.gameManager.getGameSettings().getResistancePercent() * (activePotionEffect.getAmplifier() + 1);
-                    event.setDamage(event.getDamage() * 1.2000000476837158D * (1.0F - resiPercent / 100.0F));
+                    final CrystaliaPlayer crystaliaPlayer = this.main.getPlayerManager().getExactPlayer(player);
+                    if (crystaliaPlayer.getRole() != null) {
+                        resiPercent += crystaliaPlayer.getRole().getSelfResistancePercent();
+                    }
+                    if (resiPercent >= 100)
+                        event.setCancelled(true);
+                    event.setDamage(event.getDamage() * (100 - resiPercent) / 80.0D);
                 }
             }
         }
@@ -267,8 +294,7 @@ public class PlayersListeners implements Listener {
 
     @EventHandler
     public void onWeatherChange(WeatherChangeEvent event) {
-        if (event.getWorld().equals(this.main.getMapManager().getLobby()))
-            event.setCancelled(true);
+        event.setCancelled(true);
     }
 
     @EventHandler

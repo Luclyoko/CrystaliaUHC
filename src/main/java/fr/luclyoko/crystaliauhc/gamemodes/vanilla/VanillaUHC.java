@@ -5,6 +5,7 @@ import fr.luclyoko.crystaliauhc.game.GameManager;
 import fr.luclyoko.crystaliauhc.gamemodes.GamemodeUHC;
 import fr.luclyoko.crystaliauhc.gamemodes.UHCGamemodes;
 import fr.luclyoko.crystaliauhc.map.GameWorld;
+
 import java.io.File;
 
 public class VanillaUHC extends GamemodeUHC {

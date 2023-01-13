@@ -12,11 +12,6 @@ import fr.luclyoko.crystaliauhc.guis.hostguis.scenariosguis.ScenarioManagerGui;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
 import fr.luclyoko.crystaliauhc.teams.Team;
 import fr.luclyoko.crystaliauhc.utils.ItemBuilder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.GameMode;
@@ -27,8 +22,9 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionType;
+
+import java.util.*;
 
 public class HostMainGui implements GuiBuilder {
     public String name() {
@@ -197,9 +193,7 @@ public class HostMainGui implements GuiBuilder {
                     break;
                 case EMERALD_BLOCK:
                     player.closeInventory();
-                    player.sendMessage(main.getGameManager().getGamemodeUhc().getDisplayNameChat() + "§aDémarrage de la partie.");
-                    main.getGameManager().getStartTask().runTaskTimer((Plugin)main, 20L, 20L);
-                    main.getGameManager().setGameState(GameState.STARTING);
+                    main.getGameManager().getGamemodeUhc().start(player);
                     break;
                 case REDSTONE_BLOCK:
                     player.closeInventory();

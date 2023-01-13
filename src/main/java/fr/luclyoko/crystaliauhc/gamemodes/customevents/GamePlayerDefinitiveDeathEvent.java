@@ -2,12 +2,13 @@ package fr.luclyoko.crystaliauhc.gamemodes.customevents;
 
 import fr.luclyoko.crystaliauhc.Main;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
-import java.util.HashMap;
-import java.util.Map;
-import javax.annotation.Nullable;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+
+import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GamePlayerDefinitiveDeathEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();

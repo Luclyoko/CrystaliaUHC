@@ -30,6 +30,19 @@ commands:
     description: Commande d'accès à l'interface de développement.
     permission: crystaliauhc.dev
     permission-message: Vous n'êtes pas autorisé à faire ceci!
+  force:
+    usage: /force <args>
+    description: Commande pour forcer les timers.
+    permission: crystaliauhc.host
+    permission-message: Vous n'êtes pas autorisé à faire ceci!
+  alarm:
+    usage: /alarm <hour> <minutes>
+    description: Commande pour créer une alarme.
+  arena:
+    usage: /arena <args>
+    aliases:
+      - ar
+    description: Commande principale du mode ArenaUHC.
 
 permissions:
   crystaliauhc.*:

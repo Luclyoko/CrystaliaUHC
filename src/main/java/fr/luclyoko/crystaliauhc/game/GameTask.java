@@ -4,11 +4,12 @@ import fr.luclyoko.crystaliauhc.Main;
 import fr.luclyoko.crystaliauhc.gamemodes.customevents.GameDayStartingEvent;
 import fr.luclyoko.crystaliauhc.gamemodes.customevents.GameNightStartingEvent;
 import fr.luclyoko.crystaliauhc.timers.Timer;
-import java.util.ArrayList;
-import java.util.List;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameTask extends BukkitRunnable {
     private Main main;
@@ -39,10 +40,10 @@ public class GameTask extends BukkitRunnable {
         this.timersToCheck.forEach(timer1 -> {
             if (!timer1.hasTriggered()) {
                 int remindTime = timer1.getTriggerTime() - this.timer;
-                if (timer1.getRemindTimers().contains(Integer.valueOf(remindTime)))
+                if (timer1.getRemindTimers().contains(remindTime))
                     timer1.reminder(remindTime);
                 if (timer1.getTriggerTime() == this.timer)
-                    timer1.init();
+                    timer1.init(true);
             }
         });
         if (this.dayNightCycleTimer >= this.gameManager.getGameSettings().getDayNightCycle()) {
@@ -57,9 +58,9 @@ public class GameTask extends BukkitRunnable {
         if (!this.gameManager.getGameSettings().isEternalDay()) {
             this.dayNightCycleTimer++;
             if (this.gameManager.getGameSettings().isDay()) {
-                this.gameManager.getGameWorld().getWorld().setTime(24000L - 12000L + this.dayNightCycleTimer * (12000 / this.gameManager.getGameSettings().getDayNightCycle()));
+                this.gameManager.getGameWorld().getWorld().setTime((long) this.dayNightCycleTimer * (12000 / this.gameManager.getGameSettings().getDayNightCycle()));
             } else {
-                this.gameManager.getGameWorld().getWorld().setTime(24000L - this.dayNightCycleTimer * (12000 / this.gameManager.getGameSettings().getDayNightCycle()));
+                this.gameManager.getGameWorld().getWorld().setTime(12000L + (long) this.dayNightCycleTimer * (12000 / this.gameManager.getGameSettings().getDayNightCycle()));
             }
         }
     }

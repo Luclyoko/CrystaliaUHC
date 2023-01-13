@@ -3,8 +3,6 @@ package fr.luclyoko.crystaliauhc.guis.adminguis;
 import fr.luclyoko.crystaliauhc.guis.GuiBuilder;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
 import fr.luclyoko.crystaliauhc.utils.ItemBuilder;
-import java.util.Arrays;
-import java.util.Optional;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -12,6 +10,9 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
+import java.util.Optional;
 
 public class PlayerManagerGui implements GuiBuilder {
     public String name() {

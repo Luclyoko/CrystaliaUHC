@@ -3,16 +3,17 @@ package fr.luclyoko.crystaliauhc.map;
 import fr.luclyoko.crystaliauhc.Main;
 import fr.luclyoko.crystaliauhc.utils.schematics.Schematic;
 import fr.luclyoko.crystaliauhc.utils.schematics.SchematicManager;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import javax.annotation.Nullable;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.block.Biome;
+
+import javax.annotation.Nullable;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class MapManager {
     private final Main main;

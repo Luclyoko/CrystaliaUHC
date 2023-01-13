@@ -2,11 +2,11 @@ package fr.luclyoko.crystaliauhc.game.timers;
 
 import fr.luclyoko.crystaliauhc.game.GameManager;
 import fr.luclyoko.crystaliauhc.timers.Timer;
-import java.util.Arrays;
-import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
-import org.bukkit.entity.Player;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class Border implements Timer {
     GameManager gameManager;
@@ -56,11 +56,11 @@ public class Border implements Timer {
         this.borderTime = triggerTime;
     }
 
-    public void init() {
+    public void init(boolean sound) {
         this.border = true;
         this.gameManager.getGameWorld().getWorldBorder().setSize((this.borderFinalSize * 2), (long)((this.borderInitialSize - this.borderFinalSize) / this.borderSpeed));
         Bukkit.broadcastMessage(this.gameManager.getGamemodeUhc().getDisplayNameChat() + "§cLa bordure a commencé sa réduction jusqu'en " + this.borderFinalSize + "/" + this.borderFinalSize + " à la vitesse de " + this.borderSpeed + " bloc(s)/seconde.");
-        Bukkit.getOnlinePlayers().forEach(player -> player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1.0F, 1.0F));
+        if (sound) Bukkit.getOnlinePlayers().forEach(player -> player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1.0F, 1.0F));
     }
 
     public void reminder(int remindTime) {

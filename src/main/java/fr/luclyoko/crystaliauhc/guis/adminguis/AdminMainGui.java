@@ -18,7 +18,7 @@ public class AdminMainGui implements GuiBuilder {
 
     @Override
     public int getSize() {
-        return 9*9;
+        return 9*5;
     }
 
     @Override

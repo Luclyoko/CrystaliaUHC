@@ -5,13 +5,10 @@ import fr.luclyoko.crystaliauhc.game.timers.Border;
 import fr.luclyoko.crystaliauhc.game.timers.Invincibility;
 import fr.luclyoko.crystaliauhc.game.timers.Pvp;
 import fr.luclyoko.crystaliauhc.timers.Timer;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.*;
 
 public class GameSettings {
     private Main main;

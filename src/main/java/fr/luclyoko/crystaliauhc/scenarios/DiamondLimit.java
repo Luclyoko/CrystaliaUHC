@@ -3,9 +3,6 @@ package fr.luclyoko.crystaliauhc.scenarios;
 import fr.luclyoko.crystaliauhc.guis.GuiBuilder;
 import fr.luclyoko.crystaliauhc.guis.hostguis.scenariosguis.DiamondLimitGui;
 import fr.luclyoko.crystaliauhc.utils.ItemBuilder;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ExperienceOrb;
@@ -15,6 +12,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class DiamondLimit implements Scenario, Listener {
     private final Map<UUID, Integer> limitByPlayer;

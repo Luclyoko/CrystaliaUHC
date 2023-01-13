@@ -4,12 +4,13 @@ import fr.luclyoko.crystaliauhc.game.timers.Border;
 import fr.luclyoko.crystaliauhc.guis.GuiBuilder;
 import fr.luclyoko.crystaliauhc.guis.hostguis.HostMainGui;
 import fr.luclyoko.crystaliauhc.utils.ItemBuilder;
-import java.util.Arrays;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Arrays;
 
 public class BorderMainGui implements GuiBuilder {
     public String name() {

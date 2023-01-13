@@ -7,9 +7,6 @@ import fr.luclyoko.crystaliauhc.gamemodes.customevents.GamePlayerDefinitiveDeath
 import fr.luclyoko.crystaliauhc.guis.GuiBuilder;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
 import fr.luclyoko.crystaliauhc.teams.Team;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -18,10 +15,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public abstract class GamemodeUHC implements Listener {
     protected final Main main;
@@ -42,7 +44,8 @@ public abstract class GamemodeUHC implements Listener {
         this.main = main;
         this.gameManager = gameManager;
         this.configGui = null;
-        main.getServer().getPluginManager().registerEvents(this, (Plugin)main);
+        gameManager.getGameWorld().getWorld().setGameRuleValue("naturalRegeneration", "false");
+        main.getServer().getPluginManager().registerEvents(this, main);
     }
 
     public List<String> getOptionalScoreboardLines(CrystaliaPlayer crystaliaPlayer) {
@@ -62,7 +65,7 @@ public abstract class GamemodeUHC implements Listener {
     }
 
     public String getDisplayNameChat() {
-        return this.defaultName + " ";
+        return this.defaultName + " §8» ";
     }
 
     public void setDisplayName(String displayName) {
@@ -87,7 +90,7 @@ public abstract class GamemodeUHC implements Listener {
         List<CrystaliaPlayer> playersLeft = this.main.getPlayerManager().getOnlineAlivePlayers();
         if (this.main.getTeamManager().getTeamsSize() <= 1) {
             if (playersLeft.size() == 1) {
-                finish(((CrystaliaPlayer)playersLeft.get(0)).getPlayerName());
+                finish(playersLeft.get(0).getPlayerName());
             } else if (playersLeft.size() < 1) {
                 finish("?");
             }
@@ -106,6 +109,12 @@ public abstract class GamemodeUHC implements Listener {
         }
     }
 
+    public void start(Player host) {
+        host.sendMessage(main.getGameManager().getGamemodeUhc().getDisplayNameChat() + "§aDémarrage de la partie.");
+        gameManager.getStartTask().runTaskTimer(main, 20L, 20L);
+        main.getGameManager().setGameState(GameState.STARTING);
+    }
+
     public void finish(String winner) {
         this.gameManager.getGameTask().cancel();
         this.gameManager.setGameState(GameState.FINISHED);
@@ -115,7 +124,7 @@ public abstract class GamemodeUHC implements Listener {
             player.playSound(player.getLocation(), Sound.GHAST_DEATH, 1.0F, 1.0F);
         });
         Bukkit.broadcastMessage(getDisplayNameChat() + "§aLa partie est terminée. \nVictoire de: §f§l" + winner);
-        Bukkit.getOnlinePlayers().forEach(player -> this.main.getTitle().sendTitle(player, Integer.valueOf(20), Integer.valueOf(60), Integer.valueOf(20), "§6Fin de la partie !", "§aVictoire de : §f§l" + winner));
+        Bukkit.getOnlinePlayers().forEach(player -> this.main.getTitle().sendTitle(player, 20, 60, 20, "§6Fin de la partie !", "§aVictoire de : §f§l" + winner));
         this.gameManager.getGameSettings().setWinner(winner);
     }
 
@@ -195,7 +204,19 @@ public abstract class GamemodeUHC implements Listener {
             return;
         Player player = event.getPlayer();
         event.setRespawnLocation(this.gameManager.getGameWorld().getCenter());
-        Bukkit.getScheduler().runTaskLater((Plugin)this.main, () -> player.setGameMode(GameMode.SPECTATOR), 1L);
+        Bukkit.getScheduler().runTaskLater(this.main, () -> player.setGameMode(GameMode.SPECTATOR), 1L);
         checkWin();
+    }
+
+    @EventHandler
+    public void onPlayerDamage(EntityDamageEvent event) {
+        if (!gameManager.isStarted()) return;
+        if (!this.gameManager.getGamemodeUhc().equals(this)) return;
+        if (!(event.getEntity() instanceof Player)) return;
+
+        Player player = (Player) event.getEntity();
+        CrystaliaPlayer crystaliaEntity = main.getPlayerManager().getExactPlayer((Player) event.getEntity());
+        if (crystaliaEntity.getRole() != null && crystaliaEntity.getRole().isInvincible()) event.setCancelled(true);
+        if (crystaliaEntity.getRole() != null && crystaliaEntity.getRole().isNoFall() && event.getCause().equals(EntityDamageEvent.DamageCause.FALL)) event.setCancelled(true);
     }
 }

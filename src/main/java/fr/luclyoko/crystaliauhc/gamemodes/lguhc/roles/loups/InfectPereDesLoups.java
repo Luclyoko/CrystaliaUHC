@@ -1,6 +1,5 @@
 package fr.luclyoko.crystaliauhc.gamemodes.lguhc.roles.loups;
 
-import fr.luclyoko.crystaliauhc.Main;
 import fr.luclyoko.crystaliauhc.game.GameManager;
 import fr.luclyoko.crystaliauhc.gamemodes.customevents.GamePlayerKillEvent;
 import fr.luclyoko.crystaliauhc.gamemodes.lguhc.lgevents.LGInfectionEvent;
@@ -9,8 +8,6 @@ import fr.luclyoko.crystaliauhc.gamemodes.lguhc.roles.LGRole;
 import fr.luclyoko.crystaliauhc.gamemodes.lguhc.roles.LGSides;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
 import fr.luclyoko.crystaliauhc.utils.ItemBuilder;
-import java.util.ArrayList;
-import java.util.List;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -21,6 +18,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InfectPereDesLoups extends LGRoleLoups {
     private boolean hasInfected;

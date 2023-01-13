@@ -11,17 +11,10 @@ import fr.luclyoko.crystaliauhc.guis.hostguis.HostMainGui;
 import fr.luclyoko.crystaliauhc.guis.hostguis.borderguis.BorderMainGui;
 import fr.luclyoko.crystaliauhc.guis.hostguis.enchantsguis.EnchantEditGui;
 import fr.luclyoko.crystaliauhc.guis.hostguis.enchantsguis.EnchantLimitGui;
-import fr.luclyoko.crystaliauhc.guis.hostguis.gamemodesguis.lgguis.LGCompoHybridesGui;
-import fr.luclyoko.crystaliauhc.guis.hostguis.gamemodesguis.lgguis.LGCompoLoupsGui;
-import fr.luclyoko.crystaliauhc.guis.hostguis.gamemodesguis.lgguis.LGCompoMainGui;
-import fr.luclyoko.crystaliauhc.guis.hostguis.gamemodesguis.lgguis.LGCompoSolosGui;
-import fr.luclyoko.crystaliauhc.guis.hostguis.gamemodesguis.lgguis.LGCompoVillageGui;
-import fr.luclyoko.crystaliauhc.guis.hostguis.gamemodesguis.lgguis.LGMainGui;
+import fr.luclyoko.crystaliauhc.guis.hostguis.gamemodesguis.lgguis.*;
 import fr.luclyoko.crystaliauhc.guis.hostguis.scenariosguis.DiamondLimitGui;
 import fr.luclyoko.crystaliauhc.guis.hostguis.scenariosguis.ScenarioManagerGui;
 import fr.luclyoko.crystaliauhc.guis.teamsguis.TeamSelectorGui;
-import java.util.HashMap;
-import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,6 +25,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class GuiManager implements Listener {
     private final Main main;

@@ -7,15 +7,12 @@ import fr.luclyoko.crystaliauhc.gamemodes.lguhc.roles.LGRole;
 import fr.luclyoko.crystaliauhc.gamemodes.lguhc.roles.LGSides;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
 import fr.luclyoko.crystaliauhc.utils.Effects;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.*;
 
 public class Analyste extends LGRoleVillage {
     private int leftUses;

@@ -2,15 +2,16 @@ package fr.luclyoko.crystaliauhc.scenarios;
 
 import fr.luclyoko.crystaliauhc.guis.GuiBuilder;
 import fr.luclyoko.crystaliauhc.utils.ItemBuilder;
-import java.util.Arrays;
-import java.util.List;
-import javax.annotation.Nullable;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.plugin.Plugin;
+
+import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.List;
 
 public class HasteyBabies implements Scenario, Listener {
     private boolean isEnabled;

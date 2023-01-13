@@ -3,8 +3,6 @@ package fr.luclyoko.crystaliauhc.guis.hostguis.enchantsguis;
 import fr.luclyoko.crystaliauhc.guis.GuiBuilder;
 import fr.luclyoko.crystaliauhc.utils.Enchants;
 import fr.luclyoko.crystaliauhc.utils.ItemBuilder;
-import java.util.Arrays;
-import java.util.Optional;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -12,6 +10,9 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Arrays;
+import java.util.Optional;
 
 public class EnchantEditGui implements GuiBuilder {
     public String name() {

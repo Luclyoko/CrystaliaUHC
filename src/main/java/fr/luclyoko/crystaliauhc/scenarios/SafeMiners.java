@@ -2,10 +2,6 @@ package fr.luclyoko.crystaliauhc.scenarios;
 
 import fr.luclyoko.crystaliauhc.guis.GuiBuilder;
 import fr.luclyoko.crystaliauhc.utils.ItemBuilder;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-import javax.annotation.Nullable;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
@@ -15,6 +11,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.plugin.Plugin;
+
+import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class SafeMiners implements Scenario, Listener {
     private boolean isEnabled;

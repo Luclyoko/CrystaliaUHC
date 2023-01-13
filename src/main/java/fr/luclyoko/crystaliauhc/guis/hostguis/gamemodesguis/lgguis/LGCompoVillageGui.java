@@ -5,14 +5,15 @@ import fr.luclyoko.crystaliauhc.gamemodes.lguhc.roles.LGRolesEnum;
 import fr.luclyoko.crystaliauhc.gamemodes.lguhc.roles.LGSides;
 import fr.luclyoko.crystaliauhc.guis.GuiBuilder;
 import fr.luclyoko.crystaliauhc.utils.ItemBuilder;
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class LGCompoVillageGui implements GuiBuilder {
     public String name() {
