@@ -8,6 +8,7 @@ import fr.luclyoko.crystaliauhc.game.timers.Border;
 import fr.luclyoko.crystaliauhc.gamemodes.GamemodeUHC;
 import fr.luclyoko.crystaliauhc.gamemodes.UHCGamemodes;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.inventories.InventoryManager;
+import fr.luclyoko.crystaliauhc.gamemodes.arena.powers.ArenaPowerManager;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.ArenaRole;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.ArenaRolesManager;
 import fr.luclyoko.crystaliauhc.gamemodes.customevents.GameStartingEvent;
@@ -39,6 +40,8 @@ public class ArenaUHC extends GamemodeUHC {
 
     private final ArenaRolesManager arenaRolesManager;
     private final InventoryManager inventoryManager;
+
+    private final ArenaPowerManager arenaPowerManager;
     public ArenaUHC(Main main, GameManager gameManager) {
         super(main, gameManager);
         this.defaultName = "§bCrystArena";
@@ -47,6 +50,7 @@ public class ArenaUHC extends GamemodeUHC {
         this.maxTeamSize = 1;
         this.arenaRolesManager = new ArenaRolesManager(main, gameManager);
         this.inventoryManager = new InventoryManager(this);
+        this.arenaPowerManager = new ArenaPowerManager(this, main);
         main.getTeamManager().setTeamsSize(1);
         main.getTeamManager().resetTeams();
         Bukkit.getOnlinePlayers().forEach(player1 -> {
@@ -78,6 +82,10 @@ public class ArenaUHC extends GamemodeUHC {
 
     public ArenaRolesManager getArenaRolesManager() {
         return arenaRolesManager;
+    }
+
+    public ArenaPowerManager getArenaPowerManager() {
+        return arenaPowerManager;
     }
 
     @Override
@@ -165,21 +173,24 @@ public class ArenaUHC extends GamemodeUHC {
             if ((player.getItemInHand().getType().equals(Material.NETHER_STAR) && player.getItemInHand().getItemMeta().getDisplayName().equals("§6Entrer dans l'arène")) && (
                     action.equals(Action.RIGHT_CLICK_AIR) || action.equals(Action.RIGHT_CLICK_BLOCK))) {
                 crystaliaPlayer.setAlive(true);
-                player.teleport(TeleportationTask.generateRandomLocation());
                 player.setGameMode(GameMode.SURVIVAL);
                 player.getInventory().clear();
                 arenaRolesManager.pickRole(crystaliaPlayer, true);
-                ArenaRole arenaRole = (ArenaRole) crystaliaPlayer.getRole();
-                inventoryManager.fillInventory(crystaliaPlayer);
-                if (!arenaRole.getRoleItems().isEmpty()) arenaRole.getRoleItems().forEach(itemStack -> player.getInventory().addItem(itemStack));
-                crystaliaPlayer.getRole().setInvincible(true);
                 Bukkit.getScheduler().runTaskLater(main, () -> {
-                    if (crystaliaPlayer.isOnline() && crystaliaPlayer.isAlive()) {
-                        crystaliaPlayer.getRole().setInvincible(false);
-                        crystaliaPlayer.sendMessage("§aVous pouvez désormais prendre des dégâts.");
-                    }
-                }, 3*20);
-                crystaliaPlayer.getRole().updatePlayerAttributes();
+                    ArenaRole arenaRole = (ArenaRole) crystaliaPlayer.getRole();
+                    inventoryManager.fillInventory(crystaliaPlayer);
+                    if (!arenaRole.getItems().isEmpty()) arenaRole.getItems().forEach(itemStack -> player.getInventory().addItem(itemStack));
+                    crystaliaPlayer.getRole().setInvincible(true);
+                    player.teleport(TeleportationTask.generateRandomLocation());
+                    Bukkit.getScheduler().runTaskLater(main, () -> {
+                        if (crystaliaPlayer.isOnline() && crystaliaPlayer.isAlive()) {
+                            crystaliaPlayer.getRole().setInvincible(false);
+                            crystaliaPlayer.sendMessage("§aVous pouvez désormais prendre des dégâts.");
+                        }
+                    }, 3*20);
+                    crystaliaPlayer.getRole().updatePlayerAttributes();
+                }, 10);
+
             }
         }
 

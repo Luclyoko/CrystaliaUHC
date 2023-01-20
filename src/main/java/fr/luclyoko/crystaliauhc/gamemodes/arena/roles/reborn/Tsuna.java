@@ -7,7 +7,6 @@ import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
@@ -23,8 +22,7 @@ public class Tsuna extends ArenaRole {
         super(gameManager, crystaliaPlayer);
         this.arenaRolesEnum = ArenaRolesEnum.TSUNA;
         addPermEffect(PotionEffectType.INCREASE_DAMAGE, 0);
-        this.tsunaTask = Bukkit.getScheduler().runTaskTimer(main, tsunaRunnable, 40, 40);
-        main.getServer().getPluginManager().registerEvents(this.listener, main);
+        this.tsunaTask = Bukkit.getScheduler().runTaskTimer(main, tsunaRunnable, 5, 40);
     }
 
     Runnable tsunaRunnable = () -> {
@@ -35,23 +33,16 @@ public class Tsuna extends ArenaRole {
         }
     };
 
-    Listener listener = new Listener() {
-        @EventHandler
-        public void onPlayerDeath(PlayerDeathEvent event) {
-            Player target = event.getEntity();
-            CrystaliaPlayer crystaliaDead = main.getPlayerManager().getExactPlayer(target);
-            if (crystaliaDead != crystaliaPlayer) return;
-            tsunaTask.cancel();
-        }
-    };
-
-    @Override
-    public String getPowersDescription() {
-        return "Vous disposez de l'effet §lSpeed 1 §fen permanence tant que §lReborn §fest en vie.";
+    @EventHandler
+    public void onPlayerDeath(PlayerDeathEvent event) {
+        Player target = event.getEntity();
+        CrystaliaPlayer crystaliaDead = main.getPlayerManager().getExactPlayer(target);
+        if (crystaliaDead != crystaliaPlayer) return;
+        tsunaTask.cancel();
     }
 
     @Override
-    public List<String> getPowersDescriptionList() {
+    public List<String> getAdditionalDescription() {
         return Collections.singletonList("Vous disposez de l'effet §bSpeed 1 §fen permanence tant que §eReborn §fest en vie.");
     }
 }

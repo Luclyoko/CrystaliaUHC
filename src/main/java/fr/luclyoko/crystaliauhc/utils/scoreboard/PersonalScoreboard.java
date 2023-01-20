@@ -37,7 +37,9 @@ public class PersonalScoreboard {
     public void setLines(String ip) {
         int i = 0;
         SimpleDateFormat timers = new SimpleDateFormat("mm:ss");
-        timers.setTimeZone(TimeZone.getTimeZone("GMT+1"));
+        timers.setTimeZone(TimeZone.getTimeZone("GMT+0"));
+        SimpleDateFormat durationTimer = new SimpleDateFormat("HH:mm:ss");
+        durationTimer.setTimeZone(TimeZone.getTimeZone("GMT+0"));
         SimpleDateFormat dateAndHour = new SimpleDateFormat("dd/MM/yy - HH:mm:ss");
         dateAndHour.setTimeZone(TimeZone.getTimeZone("GMT+1"));
         this.objectiveSign.setDisplayName(ChatColor.BOLD + this.gameManager.getGamemodeUhc().getDisplayName() + (this.gameManager.getGameSettings().isDevMode() ? " §a§o(dev mode)" : ""));
@@ -52,10 +54,10 @@ public class PersonalScoreboard {
                 this.objectiveSign.setLine(i++, " §8» §cMode: §r" + this.gameManager.getGamemodeUhc().getDefaultName());
                 break;
             case PLAYING:
-                this.objectiveSign.setLine(i++, " §8» §cTimer: §r" + timers.format(this.gameManager.getGameTask().getTimer() * 1000) + (this.gameManager.getGameSettings().isDay() ? " §7(§e§lJour§7)" : " §7(§8§lNuit§7)"));
+                this.objectiveSign.setLine(i++, " §8» §cTimer: §r" + durationTimer.format(this.gameManager.getGameTask().getTimer() * 1000) + (this.gameManager.getGameSettings().isDay() ? " §7(§e§lJour§7)" : " §7(§8§lNuit§7)"));
                 break;
             case FINISHED:
-                this.objectiveSign.setLine(i++, " §8» §cDurée: §r" + timers.format(this.gameManager.getGameTask().getTimer() * 1000));
+                this.objectiveSign.setLine(i++, " §8» §cDurée: §r" + durationTimer.format(this.gameManager.getGameTask().getTimer() * 1000));
                 this.objectiveSign.setLine(i++, "§2");
                 this.objectiveSign.setLine(i++, " §8» §6Victoire: §r" + this.gameManager.getGameSettings().getWinner());
                 this.objectiveSign.setLine(i++, "§3");
@@ -64,7 +66,7 @@ public class PersonalScoreboard {
                 i++;
                 break;
         }
-        this.objectiveSign.setLine(i++, " §8» §cJoueurs: §r" + this.main.getPlayerManager().getGamePlayers().size() + "/" + this.gameManager.getGameSettings().getSlots());
+        this.objectiveSign.setLine(i++, " §8» §cJoueurs: §r" + this.main.getPlayerManager().getAliveGamePlayers().size());
         if (this.gameManager.getGameState().equals(GameState.PLAYING)) {
             this.objectiveSign.setLine(i++, "§4");
             this.objectiveSign.setLine(i++, "§f§lPARTIE");

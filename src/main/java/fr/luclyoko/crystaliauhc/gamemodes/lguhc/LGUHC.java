@@ -117,7 +117,7 @@ public class LGUHC extends GamemodeUHC {
     }
 
     public Class<? extends GuiBuilder> getConfigGui() {
-        return (Class)LGMainGui.class;
+        return LGMainGui.class;
     }
 
     public LGRolesManager getRolesManager() {

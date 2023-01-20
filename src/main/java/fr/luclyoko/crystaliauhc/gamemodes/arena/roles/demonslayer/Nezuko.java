@@ -8,7 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
@@ -24,8 +23,7 @@ public class Nezuko extends ArenaRole {
         super(gameManager, crystaliaPlayer);
         this.arenaRolesEnum = ArenaRolesEnum.NEZUKO;
         addPermEffect(PotionEffectType.INCREASE_DAMAGE, 0);
-        this.nezukoTask = Bukkit.getScheduler().runTaskTimer(main, nezukoRunnable, 40, 40);
-        main.getServer().getPluginManager().registerEvents(this.listener, main);
+        this.nezukoTask = Bukkit.getScheduler().runTaskTimer(main, nezukoRunnable, 5, 40);
 
     }
 
@@ -48,18 +46,16 @@ public class Nezuko extends ArenaRole {
         }
     };
 
-    Listener listener = new Listener() {
-        @EventHandler
-        public void onPlayerDeath(PlayerDeathEvent event) {
-            Player target = event.getEntity();
-            CrystaliaPlayer crystaliaDead = main.getPlayerManager().getExactPlayer(target);
-            if (crystaliaDead != crystaliaPlayer) return;
-            nezukoTask.cancel();
-        }
-    };
+    @EventHandler
+    public void onPlayerDeath(PlayerDeathEvent event) {
+        Player target = event.getEntity();
+        CrystaliaPlayer crystaliaDead = main.getPlayerManager().getExactPlayer(target);
+        if (crystaliaDead != crystaliaPlayer) return;
+        nezukoTask.cancel();
+    }
 
     @Override
-    public List<String> getPowersDescriptionList() {
+    public List<String> getAdditionalDescription() {
         return Collections.singletonList("Vous disposez de l'effet §bResistance 1 §fpermanent à moins de 30 blocs de §eTanjiro§f.");
     }
 }

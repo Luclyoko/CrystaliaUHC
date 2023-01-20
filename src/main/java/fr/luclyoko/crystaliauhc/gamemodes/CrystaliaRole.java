@@ -155,6 +155,14 @@ public abstract class CrystaliaRole {
         }
     }
 
+    public void heal(int toHeal) {
+        if (this.crystaliaPlayer.isOnline() && this.crystaliaPlayer.isAlive()) {
+            Player player = this.crystaliaPlayer.getPlayer();
+            if (player.getHealth() + toHeal >= maxHealth) player.setHealth(maxHealth);
+            else player.setHealth(player.getHealth() + toHeal);
+        }
+    }
+
     public void resetEffects() {
         this.dayEffects = new HashMap<>();
         this.nightEffects = new HashMap<>();
@@ -296,6 +304,14 @@ public abstract class CrystaliaRole {
         this.selfStrengthPercent = selfStrengthPercent;
     }
 
+    public void addSelfStrengthPercent(int selfStrengthPercent) {
+        this.selfStrengthPercent += selfStrengthPercent;
+    }
+
+    public void removeSelfStrengthPercent(int selfStrengthPercent) {
+        this.selfStrengthPercent -= selfStrengthPercent;
+    }
+
     public int getSelfResistancePercent() {
         return selfResistancePercent;
     }
@@ -304,12 +320,30 @@ public abstract class CrystaliaRole {
         this.selfResistancePercent = selfResistancePercent;
     }
 
+    public void addSelfResistancePercent(int selfResistancePercent) {
+        this.selfResistancePercent += selfResistancePercent;
+    }
+
+    public void removeSelfResistancePercent(int selfResistancePercent) {
+        this.selfResistancePercent -= selfResistancePercent;
+    }
+
     public int getSelfSpeedPercent() {
         return selfSpeedPercent;
     }
 
     public void setSelfSpeedPercent(int selfSpeedPercent) {
         this.selfSpeedPercent = selfSpeedPercent;
+        updatePlayerSpeed();
+    }
+
+    public void addSelfSpeedPercent(int selfSpeedPercent) {
+        this.selfSpeedPercent += selfSpeedPercent;
+        updatePlayerSpeed();
+    }
+
+    public void removeSelfSpeedPercent(int selfSpeedPercent) {
+        this.selfSpeedPercent -= selfSpeedPercent;
         updatePlayerSpeed();
     }
 
@@ -327,6 +361,7 @@ public abstract class CrystaliaRole {
 
     public void setCanSeeLife(boolean canSeeLife) {
         this.canSeeLife = canSeeLife;
+        updateCanSeeLife();
     }
 
     public void updateCanSeeLife() {

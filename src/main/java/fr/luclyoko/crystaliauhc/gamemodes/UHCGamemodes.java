@@ -7,10 +7,10 @@ import fr.luclyoko.crystaliauhc.gamemodes.vanilla.VanillaUHC;
 import org.bukkit.Material;
 
 public enum UHCGamemodes {
-    VANILLA("Classique", "vanilla", Material.GOLDEN_APPLE, (Class)VanillaUHC.class),
+    VANILLA("Classique", "vanilla", Material.GOLDEN_APPLE, VanillaUHC.class),
     ARENA("CrystArena", "arenauhc", Material.DIAMOND_CHESTPLATE, ArenaUHC.class),
-    LG_UHC("LG UHC (WIP)", "lguhc", Material.BONE, (Class)LGUHC.class),
-    KWAMI_UHC("Kwami UHC (WIP)", "kwamiuhc", Material.HUGE_MUSHROOM_2, (Class)KwamiUHC.class);
+    LG_UHC("LG UHC (WIP)", "lguhc", Material.BONE, LGUHC.class),
+    KWAMI_UHC("Kwami UHC (WIP)", "kwamiuhc", Material.HUGE_MUSHROOM_2, KwamiUHC.class);
 
     private final String displayName;
 

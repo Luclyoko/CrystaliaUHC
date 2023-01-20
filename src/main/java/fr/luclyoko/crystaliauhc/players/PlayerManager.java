@@ -7,9 +7,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class PlayerManager {
-    private Main main;
+    private final Main main;
 
-    private Map<UUID, CrystaliaPlayer> crystaliaPlayers;
+    private final Map<UUID, CrystaliaPlayer> crystaliaPlayers;
 
     public PlayerManager(Main main) {
         this.main = main;
@@ -47,6 +47,6 @@ public class PlayerManager {
     }
 
     public List<CrystaliaPlayer> getOnlineAlivePlayers() {
-        return getAliveGamePlayers().stream().filter(CrystaliaPlayer::isOnline).collect(Collectors.toList());
+        return getGamePlayers().stream().filter(CrystaliaPlayer::isOnline).filter(CrystaliaPlayer::isAlive).collect(Collectors.toList());
     }
 }

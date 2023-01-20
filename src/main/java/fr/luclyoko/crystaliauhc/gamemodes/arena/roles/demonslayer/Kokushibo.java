@@ -5,7 +5,6 @@ import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.ArenaRolesEnum;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.potion.PotionEffectType;
 
@@ -22,24 +21,21 @@ public class Kokushibo extends Demon {
         addPermEffect(PotionEffectType.SPEED, 0);
         addNightEffect(PotionEffectType.INCREASE_DAMAGE, 0);
         this.nichirinBlade = NichirinBladeManager.chooseBlade(this);
-        main.getServer().getPluginManager().registerEvents(this.listener, main);
     }
 
-    Listener listener = new Listener() {
-        @EventHandler
-        public void onPlayerKill(PlayerDeathEvent event) {
-            Player target = event.getEntity();
-            if (target.getKiller() != null) {
-                CrystaliaPlayer crystaliaKiller = main.getPlayerManager().getExactPlayer(target.getKiller());
-                if (crystaliaKiller != crystaliaPlayer) return;
-                if (crystaliaPlayer.getRole() == null || !crystaliaPlayer.getRole().equals(Kokushibo.this)) return;
-                if (maxHealth < 30) {
-                    addMaxHealth(1);
-                    crystaliaPlayer.sendMessage("§aVotre kill vous rapporte §c1/2❤ §apermanent.");
-                }
+    @EventHandler
+    public void onPlayerKill(PlayerDeathEvent event) {
+        Player target = event.getEntity();
+        if (target.getKiller() != null) {
+            CrystaliaPlayer crystaliaKiller = main.getPlayerManager().getExactPlayer(target.getKiller());
+            if (crystaliaKiller != crystaliaPlayer) return;
+            if (crystaliaPlayer.getRole() == null || !crystaliaPlayer.getRole().equals(Kokushibo.this)) return;
+            if (maxHealth < 30) {
+                addMaxHealth(1);
+                crystaliaPlayer.sendMessage("§aVotre kill vous rapporte §c1/2❤ §apermanent.");
             }
         }
-    };
+    }
 
     @Override
     public String getDescription() {
@@ -67,7 +63,7 @@ public class Kokushibo extends Demon {
     }
 
     @Override
-    public List<String> getPowersDescriptionList() {
+    public List<String> getAdditionalDescription() {
         return Collections.singletonList("Vous obtenez §c1/2❤ permanent §fà chaque kill (maximum: 15 coeurs).");
     }
 }

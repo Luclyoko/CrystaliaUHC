@@ -27,7 +27,7 @@ public class NichirinBladeManager {
                 break;
             case PINK:
                 arenaRole.addMaxHealth(4);
-                arenaRole.heal();
+                arenaRole.heal(4);
                 break;
             case RED:
                 arenaRole.setCanSeeLife(true);

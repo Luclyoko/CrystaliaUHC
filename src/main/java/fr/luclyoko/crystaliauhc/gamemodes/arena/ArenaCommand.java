@@ -2,6 +2,8 @@ package fr.luclyoko.crystaliauhc.gamemodes.arena;
 
 import fr.luclyoko.crystaliauhc.Main;
 import fr.luclyoko.crystaliauhc.game.GameManager;
+import fr.luclyoko.crystaliauhc.gamemodes.arena.powers.ArenaPower;
+import fr.luclyoko.crystaliauhc.gamemodes.arena.powers.ArenaPowerEnum;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.ArenaRole;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.ArenaRolesEnum;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
@@ -11,6 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -61,9 +64,44 @@ public class ArenaCommand implements TabExecutor {
                             try {
                                 ArenaRolesEnum arenaRolesEnum = ArenaRolesEnum.valueOf(role.toUpperCase(Locale.ROOT));
                                 arenaUHC.getArenaRolesManager().addForcedRole(playerToForce, arenaRolesEnum);
-                                crystaliaPlayer.sendMessage("§aProchain rôle forcé: §6" + arenaRolesEnum.getName());
+                                crystaliaPlayer.sendMessage("§aProchain rôle forcé pour " + playerToForce.getPlayerName() + ": §6" + arenaRolesEnum.getName());
                             } catch (IllegalArgumentException e) {
                                 e.printStackTrace();
+                            }
+                        }
+                    }
+                    return true;
+                case "grantpower":
+                    if (gameManager.getGameSettings().getHost().equals(player.getUniqueId())) {
+                        if (args.length > 1) {
+                            String role = args[1];
+                            CrystaliaPlayer playerToGrant = crystaliaPlayer;
+                            if (args.length > 2) {
+                                String name = args[2];
+                                if (Bukkit.getPlayer(name) != null) {
+                                    CrystaliaPlayer crystaliaTarget = main.getPlayerManager().getExactPlayer(Bukkit.getPlayer(name));
+                                    if (crystaliaTarget.isOnline()) {
+                                        playerToGrant = crystaliaTarget;
+                                    }
+                                }
+                            }
+                            if (!playerToGrant.isOnline() || !playerToGrant.isAlive()) return true;
+                            if (playerToGrant.getRole() != null && playerToGrant.getRole() instanceof ArenaRole) {
+                                ArenaRole arenaRole = (ArenaRole) playerToGrant.getRole();
+                                try {
+                                    ArenaPowerEnum arenaPowerEnum = ArenaPowerEnum.valueOf(role.toUpperCase(Locale.ROOT));
+                                    Class[] classArgs = new Class[3];
+                                    classArgs[0] = ArenaUHC.class;
+                                    classArgs[1] = ArenaRole.class;
+                                    classArgs[2] = Main.class;
+                                    ArenaPower power = arenaPowerEnum.getPowerClass().getDeclaredConstructor(classArgs).newInstance(arenaUHC, arenaRole, main);
+                                    arenaRole.addPower(power);
+                                    playerToGrant.giveItem(power.getPowerItem());
+                                    crystaliaPlayer.sendMessage("§aPouvoir accordé à " + playerToGrant.getPlayerName() + ": §6" + arenaPowerEnum.getName());
+                                } catch (InvocationTargetException | InstantiationException | IllegalAccessException |
+                                         NoSuchMethodException e) {
+                                    throw new RuntimeException(e);
+                                }
                             }
                         }
                     }
@@ -80,8 +118,11 @@ public class ArenaCommand implements TabExecutor {
     }
 
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+        Player player = (Player) sender;
         if (args.length == 1) {
-            List<String> subcommands = Arrays.asList("role", "saveinventory", "forceroles", "forcenextrole");
+            List<String> subcommands = new ArrayList<>(Arrays.asList("role", "saveinventory"));
+            List<String> admincommands = new ArrayList<>(Arrays.asList("forceroles", "forcenextrole", "grantpower"));
+            if (gameManager.getGameSettings().getHost().equals(player.getUniqueId())) subcommands.addAll(admincommands);
             return subcommands.stream().filter(s -> s.startsWith(args[0])).collect(Collectors.toList());
         }
         if (args.length == 2) {
@@ -91,6 +132,12 @@ public class ArenaCommand implements TabExecutor {
                     roles.add(rolesEnum.name());
                 }
                 return roles.stream().filter(s -> s.startsWith(args[1].toUpperCase(Locale.ROOT))).collect(Collectors.toList());
+            } else if (args[0].equals("grantpower")) {
+                List<String> powers = new ArrayList<>();
+                for (ArenaPowerEnum powerEnum : ArenaPowerEnum.values()) {
+                    powers.add(powerEnum.name());
+                }
+                return powers.stream().filter(s -> s.startsWith(args[1].toUpperCase(Locale.ROOT))).collect(Collectors.toList());
             }
         }
         return Collections.emptyList();

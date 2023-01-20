@@ -4,8 +4,13 @@ public enum RoleGamemodeEnum {
     LGUHC("Loup-Garou"),
     INAZUMA("Inazuma Eleven"),
     DEMON_SLAYER("Demon Slayer"),
+    DISNEY("Disney"),
     LOTR("Lord Of The Rings"),
-    REBORN("Reborn");
+    AOT("Attack On Titan"),
+    REBORN("Reborn"),
+    DEATH_NOTE("Death Note"),
+    NORAGAMI("Noragami"),
+    NARUTO("Naruto");
 
     private String name;
 

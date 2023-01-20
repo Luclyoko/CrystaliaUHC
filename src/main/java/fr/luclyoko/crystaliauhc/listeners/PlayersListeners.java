@@ -75,6 +75,7 @@ public class PlayersListeners implements Listener {
             CrystaliaPlayer crystaliaPlayer = this.main.getPlayerManager().getExactPlayer(player);
             player.setScoreboard(crystaliaPlayer.getScoreboard());
             if (gameManager.getGamemodeUhc().getGamemodeEnum().equals(UHCGamemodes.ARENA)) {
+                crystaliaPlayer.setSpec(false);
                 crystaliaPlayer.setAlive(true);
                 ((ArenaUHC)gameManager.getGamemodeUhc()).getArenaRolesManager().pickRole(crystaliaPlayer, false);
                 player.setHealth(0);
@@ -133,6 +134,7 @@ public class PlayersListeners implements Listener {
             if (crystaliaPlayer.getRole() != null && crystaliaPlayer.getRole() instanceof ArenaRole) {
                 ArenaRole arenaRole = (ArenaRole) crystaliaPlayer.getRole();
                 ((ArenaUHC)gameManager.getGamemodeUhc()).getArenaRolesManager().addForcedRole(crystaliaPlayer, arenaRole.getArenaRolesEnum());
+                ((ArenaUHC)gameManager.getGamemodeUhc()).getArenaRolesManager().removePlayingRole(arenaRole.getArenaRolesEnum());
                 arenaRole.resetEffects();
                 crystaliaPlayer.setRole(null);
                 crystaliaPlayer.setAlive(false);

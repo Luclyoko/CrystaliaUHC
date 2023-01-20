@@ -9,7 +9,6 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
@@ -22,21 +21,18 @@ public class AAssassin extends ArenaRole {
         super(gameManager, crystaliaPlayer);
         this.arenaRolesEnum = ArenaRolesEnum.ASSASSIN;
         addDayEffect(PotionEffectType.INCREASE_DAMAGE, 0);
-        main.getServer().getPluginManager().registerEvents(this.listener, main);
     }
 
-    Listener listener = new Listener() {
-        @EventHandler
-        public void onPlayerKill(PlayerDeathEvent event) {
-            Player target = event.getEntity();
-            if (target.getKiller() != null) {
-                CrystaliaPlayer crystaliaKiller = main.getPlayerManager().getExactPlayer(target.getKiller());
-                if (crystaliaKiller != crystaliaPlayer) return;
-                if (crystaliaPlayer.getRole() == null || !crystaliaPlayer.getRole().equals(AAssassin.this)) return;
-                addTempEffect(PotionEffectType.SPEED, 0, 2*20*60, false);
-            }
+    @EventHandler
+    public void onPlayerKill(PlayerDeathEvent event) {
+        Player target = event.getEntity();
+        if (target.getKiller() != null) {
+            CrystaliaPlayer crystaliaKiller = main.getPlayerManager().getExactPlayer(target.getKiller());
+            if (crystaliaKiller != crystaliaPlayer) return;
+            if (crystaliaPlayer.getRole() == null || !crystaliaPlayer.getRole().equals(AAssassin.this)) return;
+            addTempEffect(PotionEffectType.SPEED, 0, 2 * 20 * 60, false);
         }
-    };
+    }
 
     @Override
     public ItemStack getChestplate() {
@@ -54,7 +50,7 @@ public class AAssassin extends ArenaRole {
     }
 
     @Override
-    public List<String> getPowersDescriptionList() {
+    public List<String> getAdditionalDescription() {
         return Arrays.asList("Vous disposez d'un plastron en diamant §dProtection 3§f, une épée en diamant §dSharpness 4 §fet d'un arc §dPower 3§f.",
                 "Vous obtenez 2 minutes de §bSpeed 1 §fà chaque kill.");
     }
