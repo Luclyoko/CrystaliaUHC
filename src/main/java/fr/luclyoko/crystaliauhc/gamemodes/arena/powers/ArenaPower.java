@@ -56,7 +56,7 @@ public abstract class ArenaPower implements Listener {
         Action action = event.getAction();
         if (action.equals(Action.RIGHT_CLICK_BLOCK) || action.equals(Action.RIGHT_CLICK_AIR)) {
             ItemStack clickedItem = event.getItem();
-            if (clickedItem.equals(getPowerItem())) {
+            if (clickedItem != null && clickedItem.equals(getPowerItem())) {
                 event.setCancelled(true);
                 if (isOnUse()) {
                     playerWhoClicked.sendMessage("§cVotre " + getColoredName() + " §cest déjà en cours d'utilisation.");
@@ -72,9 +72,10 @@ public abstract class ArenaPower implements Listener {
                 }
                 lastUse = System.currentTimeMillis();
                 if (uses > 0) uses--;
-                execute(playerWhoClicked);
+                execute(playerWhoClicked, event);
                 if (lastUse != -1) {
                     playerWhoClicked.sendMessage("§aVous venez d'utiliser votre " + getColoredName() + "§a.");
+                    if (uses == 0) player.getInventory().remove(getPowerItem());
                     Bukkit.getScheduler().runTaskLater(main, () -> {
                         if (uses >= 1 || uses == -1) {
                             if (playerWhoClicked.isOnline() && playerWhoClicked.isAlive()) {
@@ -101,6 +102,10 @@ public abstract class ArenaPower implements Listener {
         user.sendMessage("§cErreur: Impossible d'exécuter ce pouvoir.");
     }
 
+    public void execute(CrystaliaPlayer user, PlayerInteractEvent event) {
+        execute(user);
+    }
+
     public String getName() {
         return arenaPowerEnum.getName();
     }
@@ -111,6 +116,14 @@ public abstract class ArenaPower implements Listener {
 
     public String getColoredName() {
         return getColor() + getName();
+    }
+
+    public ArenaRole getArenaRole() {
+        return arenaRole;
+    }
+
+    public void setArenaRole(ArenaRole arenaRole) {
+        this.arenaRole = arenaRole;
     }
 
     public int getTimeSinceLastUse() {

@@ -5,6 +5,7 @@ import fr.luclyoko.crystaliauhc.gamemodes.arena.ArenaUHC;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.ArenaRole;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
 import org.bukkit.Bukkit;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 public class FightingSpirit extends ArenaPower {
     public FightingSpirit(ArenaUHC arenaUHC, ArenaRole arenaRole, Main main) {
@@ -15,7 +16,7 @@ public class FightingSpirit extends ArenaPower {
 
     @Override
     public void execute(CrystaliaPlayer user) {
-        user.getPlayer().setVelocity(user.getPlayer().getLocation().getDirection().multiply(3.0D).setY(0.9D));
+        user.getPlayer().setVelocity(user.getPlayer().getLocation().getDirection().multiply(2.0D).setY(0.9D));
         if (user.getRole() instanceof ArenaRole) {
             ArenaRole role = (ArenaRole) user.getRole();
             user.getRole().setNoFall(true);

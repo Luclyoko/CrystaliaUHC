@@ -7,13 +7,14 @@ import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffectType;
 
 public class FireGodDance extends ArenaPower {
     public FireGodDance(ArenaUHC arenaUHC, ArenaRole arenaRole, Main main) {
         super(arenaUHC, arenaRole, main);
         this.arenaPowerEnum = ArenaPowerEnum.DANSE_DU_DIEU_DU_FEU;
-        this.duration = 60;
+        this.duration = 40;
         this.cooldown = 150;
     }
 
@@ -37,6 +38,6 @@ public class FireGodDance extends ArenaPower {
 
     @Override
     public String getDescription() {
-        return "Vous permet d'obtenir l'effet §bSpeed 1 §fet d'§benflammer §fvos adversaires pendant 1 minute.";
+        return "Vous permet d'obtenir l'effet §bSpeed 1 §fet d'§benflammer §fvos adversaires pendant 40 secondes.";
     }
 }

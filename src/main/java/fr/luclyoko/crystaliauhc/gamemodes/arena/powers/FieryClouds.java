@@ -10,6 +10,7 @@ import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class FieryClouds extends ArenaPower {
@@ -30,8 +31,10 @@ public class FieryClouds extends ArenaPower {
             Snowball snowball = (Snowball) event.getEntity();
             if (snowball.getShooter() instanceof Player) {
                 Player player = (Player) snowball.getShooter();
-                if (!arenaRole.getCrystaliaPlayer().getPlayer().equals(player)) return;
-                snowball.getWorld().createExplosion(snowball.getLocation(), 3F);
+                if (player != null && arenaRole.getCrystaliaPlayer().getPlayer() != null) {
+                    if (!arenaRole.getCrystaliaPlayer().getPlayer().equals(player)) return;
+                    snowball.getWorld().createExplosion(snowball.getLocation(), 2F);
+                }
             }
         }
     }
@@ -42,11 +45,13 @@ public class FieryClouds extends ArenaPower {
             Snowball snowball = (Snowball) event.getEntity();
             if (snowball.getShooter() instanceof Player) {
                 Player player = (Player) snowball.getShooter();
-                if (!arenaRole.getCrystaliaPlayer().getPlayer().equals(player)) return;
-                if (player.getItemInHand().getType().equals(Material.SNOW_BALL)) {
-                    ItemStack ball = player.getItemInHand();
-                    event.setCancelled(true);
-                    player.getInventory().addItem(ball);
+                if (player != null && arenaRole.getCrystaliaPlayer().getPlayer() != null) {
+                    if (!arenaRole.getCrystaliaPlayer().getPlayer().equals(player)) return;
+                    if (player.getItemInHand().getType().equals(Material.SNOW_BALL)) {
+                        ItemStack ball = player.getItemInHand();
+                        event.setCancelled(true);
+                        player.getInventory().addItem(ball);
+                    }
                 }
             }
         }

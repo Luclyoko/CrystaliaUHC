@@ -4,6 +4,7 @@ import fr.luclyoko.crystaliauhc.Main;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.ArenaUHC;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.ArenaRole;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffectType;
 
 public class MikasaBooster extends ArenaPower {
@@ -15,7 +16,7 @@ public class MikasaBooster extends ArenaPower {
     }
 
     @Override
-    public void execute(CrystaliaPlayer user) {
+    public void execute(CrystaliaPlayer user, PlayerInteractEvent event) {
         user.getRole().addTempEffect(PotionEffectType.SPEED, 0, duration * 20, false);
         user.getRole().addTempEffect(PotionEffectType.INCREASE_DAMAGE, 0, duration * 20, false);
     }

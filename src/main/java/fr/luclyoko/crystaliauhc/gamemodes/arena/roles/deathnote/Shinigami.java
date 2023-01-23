@@ -24,7 +24,6 @@ public class Shinigami extends ArenaRole {
         this.arenaRolesEnum = ArenaRolesEnum.SHINIGAMI;
         addPermEffect(PotionEffectType.DAMAGE_RESISTANCE, 0);
         this.shinigamiTask = Bukkit.getScheduler().runTaskTimer(main, shinigamiRunnable, 5, 40);
-
     }
 
     Runnable shinigamiRunnable = () -> {
@@ -55,7 +54,7 @@ public class Shinigami extends ArenaRole {
         if (target.getKiller() != null) {
             CrystaliaPlayer crystaliaKiller = main.getPlayerManager().getExactPlayer(target.getKiller());
             if (crystaliaKiller != crystaliaPlayer) return;
-            if (crystaliaPlayer.getRole() == null || !crystaliaPlayer.getRole().equals(Shinigami.this)) return;
+            if (crystaliaPlayer.getRole() == null || !crystaliaPlayer.getRole().equals(this)) return;
             if (maxHealth < 30) {
                 addMaxHealth(1);
                 crystaliaPlayer.sendMessage("§aVotre kill vous rapporte §c1/2❤ §apermanent.");

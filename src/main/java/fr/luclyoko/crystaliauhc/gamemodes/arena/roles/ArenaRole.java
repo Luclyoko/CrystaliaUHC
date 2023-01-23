@@ -50,17 +50,15 @@ public abstract class ArenaRole extends CrystaliaRole implements Listener {
             if (crystaliaPlayer.isOnline() && crystaliaPlayer.isAlive()) {
                 if (crystaliaPlayer.getRole() != null && crystaliaPlayer.getRole().equals(this)) {
                     StringBuilder sb = new StringBuilder();
-                    int i = 0;
                     for (ArenaPower power : this.powers) {
                         if (power.getUses() != 0 || power.getCooldown() != -1) {
+                            if (!sb.toString().equals("")) sb.append(" §7| ");
                             sb.append(power.getColoredName())
-                                    .append(" §7» ");
+                                    .append(" §8» ");
                             if (power.isOnUse()) sb.append("§eActif");
                             else if (power.isOnCooldown()) sb.append("§c")
                                     .append(power.formatTimeDefault(power.getActualCooldown()));
                             else sb.append("§aDisponible");
-                            i++;
-                            if (i != powers.size()) sb.append(" §8| ");
                         }
                     }
                     main.getTitle().sendActionBar(crystaliaPlayer.getPlayer(), sb.toString());
@@ -216,5 +214,9 @@ public abstract class ArenaRole extends CrystaliaRole implements Listener {
 
     public void addPower(ArenaPower power) {
         this.powers.add(power);
+    }
+
+    public void removePower(ArenaPower power) {
+        this.powers.remove(power);
     }
 }

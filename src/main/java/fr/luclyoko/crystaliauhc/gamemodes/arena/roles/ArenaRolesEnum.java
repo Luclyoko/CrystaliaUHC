@@ -10,6 +10,7 @@ import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.deathnote.Shinigami;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.demonslayer.*;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.disney.FlashMcQueen;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.inazuma.AxelBlaze;
+import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.inazuma.ErikEagle;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.inazuma.MarkEvans;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.lotr.*;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.loupgarou.*;
@@ -23,6 +24,7 @@ public enum ArenaRolesEnum {
 
     AXEL_BLAZE("Axel Blaze", RoleGamemodeEnum.INAZUMA, AxelBlaze.class),
     MARK_EVANS("Mark Evans", RoleGamemodeEnum.INAZUMA, MarkEvans.class),
+    ERIK_EAGLE("Erik Eagle", RoleGamemodeEnum.INAZUMA, ErikEagle.class),
     LEGOLAS("Legolas", RoleGamemodeEnum.LOTR, Legolas.class),
     BILBON("Bilbon", RoleGamemodeEnum.LOTR, Bilbon.class),
     GIMLY("Gimly", RoleGamemodeEnum.LOTR, Gimly.class),
@@ -43,6 +45,7 @@ public enum ArenaRolesEnum {
     MIKASA("Mikasa", RoleGamemodeEnum.AOT, Mikasa.class),
     MUZAN("Muzan", RoleGamemodeEnum.DEMON_SLAYER, Muzan.class),
     KOKUSHIBO("Kokushibo", RoleGamemodeEnum.DEMON_SLAYER, Kokushibo.class),
+    DOMA("Doma", RoleGamemodeEnum.DEMON_SLAYER, Doma.class),
     AKAZA("Akaza", RoleGamemodeEnum.DEMON_SLAYER, Akaza.class),
     KAIGAKU("Kaigaku", RoleGamemodeEnum.DEMON_SLAYER, Kaigaku.class),
     TANJIRO("Tanjiro", RoleGamemodeEnum.DEMON_SLAYER, Tanjiro.class),

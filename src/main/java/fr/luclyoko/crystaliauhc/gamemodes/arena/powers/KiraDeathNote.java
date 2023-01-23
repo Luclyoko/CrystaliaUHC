@@ -7,6 +7,7 @@ import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.util.Vector;
 
 import java.util.Optional;
@@ -32,12 +33,16 @@ public class KiraDeathNote extends ArenaPower {
                     if (main.getPlayerManager().getExactPlayer(target) != null) {
                         CrystaliaPlayer crystaliaTarget = main.getPlayerManager().getExactPlayer(target);
                         if (crystaliaTarget.getRole() != null && crystaliaTarget.getRole() instanceof ArenaRole) {
-                            Vector towardsEntity = target.getLocation().subtract(player.getLocation()).toVector().normalize();
-                            if (player.getLocation().getDirection().distance(towardsEntity) < 0.1) {
-                                double distance = player.getLocation().distance(target.getLocation());
-                                if (lowestDistance == 0 || distance < lowestDistance) {
-                                    lowestDistance = distance;
-                                    nearestPlayer = Optional.of(target);
+                            if (player.hasLineOfSight(target)) {
+                                nearestPlayer = Optional.of(target);
+                            } else {
+                                Vector towardsEntity = target.getLocation().subtract(player.getLocation()).toVector().normalize();
+                                if (player.getLocation().getDirection().distance(towardsEntity) < 0.1) {
+                                    double distance = player.getLocation().distance(target.getLocation());
+                                    if (lowestDistance == 0 || distance < lowestDistance) {
+                                        lowestDistance = distance;
+                                        nearestPlayer = Optional.of(target);
+                                    }
                                 }
                             }
                         }

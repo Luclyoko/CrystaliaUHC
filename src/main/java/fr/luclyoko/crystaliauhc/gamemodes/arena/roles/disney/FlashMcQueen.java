@@ -18,6 +18,7 @@ public class FlashMcQueen extends ArenaRole {
         super(gameManager, crystaliaPlayer);
         this.arenaRolesEnum = ArenaRolesEnum.FLASHMCQUEEN;
         addPermEffect(PotionEffectType.SPEED, 0);
+        addPermEffect(PotionEffectType.INCREASE_DAMAGE, 0);
     }
 
     @EventHandler

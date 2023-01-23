@@ -4,17 +4,25 @@ import fr.luclyoko.crystaliauhc.Main;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.ArenaUHC;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.ArenaRole;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-public class ThunderingHit extends ArenaPower {
-    public ThunderingHit(ArenaUHC arenaUHC, ArenaRole arenaRole, Main main) {
+public class HelicopterShot extends ArenaPower {
+
+    List<CrystaliaPlayer> blockFallDie;
+    public HelicopterShot(ArenaUHC arenaUHC, ArenaRole arenaRole, Main main) {
         super(arenaUHC, arenaRole, main);
-        this.arenaPowerEnum = ArenaPowerEnum.FRAPPE_FOUDROYANTE;
+        this.arenaPowerEnum = ArenaPowerEnum.TIR_HELICOPTERE;
         this.cooldown = 180;
+        this.blockFallDie = new ArrayList<>();
     }
 
     @Override
@@ -23,7 +31,7 @@ public class ThunderingHit extends ArenaPower {
         double lowestDistance = 0;
         Player player = user.getPlayer();
 
-        for (Entity entity : player.getNearbyEntities(60, 60, 60)) {
+        for (Entity entity : player.getNearbyEntities(30, 30, 30)) {
             if (entity instanceof Player) {
                 Player target = (Player) entity;
                 if (target != player) {
@@ -50,20 +58,40 @@ public class ThunderingHit extends ArenaPower {
 
         if (nearestPlayer.isPresent()) {
             Player target = nearestPlayer.get();
-            player.teleport(target.getLocation());
-            if (target.getHealth() <= 4) target.setHealth(1);
-            else target.setHealth(target.getHealth() - 4);
-            target.getWorld().strikeLightningEffect(target.getLocation());
-            user.sendMessage("§aVous avez été téléporté sur §e" + target.getName() + " §agrâce à votre " + getColoredName() + "§a.");
-            target.sendMessage("§e" + user.getRole().getName() + " §cs'est téléporté sur vous grâce à sa " + getColoredName() + "§c.");
+
+            target.setVelocity(target.getLocation().add(0, 50, 0).toVector().setX(0).setZ(0));
+            CrystaliaPlayer crystaliaTarget = main.getPlayerManager().getExactPlayer(target);
+            blockFallDie.add(crystaliaTarget);
+            Bukkit.getScheduler().runTaskLater(main, () -> blockFallDie.remove(crystaliaTarget), 8*20);
+
+            user.sendMessage("§aVous envoyez §e" + target.getName() + " §adans les airs grâce à votre " + getColoredName() + "§a.");
+            target.sendMessage("§e" + user.getRole().getName() + " §cvous envoie dans les airs grâce à son " + getColoredName() + "§c.");
         } else {
-            user.sendMessage("§cAucun joueur sur lequel vous téléporter n'a été détecté.");
+            user.sendMessage("§cAucun joueur sur lequel utiliser votre " + getColoredName() + " §cn'a été détecté.");
             lastUse = -1;
+        }
+    }
+
+    @EventHandler
+    public void onFallDeath(EntityDamageEvent event) {
+        if (event.isCancelled()) return;
+        if (event.getEntity() instanceof Player) {
+            Player player = (Player) event.getEntity();
+
+            if (event.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
+                CrystaliaPlayer crystaliaPlayer = main.getPlayerManager().getExactPlayer(player);
+
+                if (blockFallDie.contains(crystaliaPlayer) && player.getHealth() - event.getFinalDamage() <= 0) {
+                    event.setDamage(0);
+                    player.setVelocity(new Vector());
+                    player.setHealth(1);
+                }
+            }
         }
     }
 
     @Override
     public String getDescription() {
-        return "Vous permet de vous téléporter sur un joueur, lui infligeant §c2❤ §fde dégâts avec un éclair.";
+        return "Vous permet d'envoyer le joueur que vous visez dans les airs (environ 50 blocs, laisse à 1/2❤).";
     }
 }

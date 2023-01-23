@@ -6,6 +6,7 @@ import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.ArenaRole;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 public class Flash extends ArenaPower {
     public Flash(ArenaUHC arenaUHC, ArenaRole arenaRole, Main main) {
