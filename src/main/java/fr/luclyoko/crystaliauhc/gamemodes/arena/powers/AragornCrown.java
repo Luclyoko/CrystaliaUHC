@@ -4,6 +4,7 @@ import fr.luclyoko.crystaliauhc.Main;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.ArenaUHC;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.ArenaRole;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.potion.PotionEffectType;
 
 public class AragornCrown extends ArenaPower {
@@ -20,6 +21,9 @@ public class AragornCrown extends ArenaPower {
         user.getRole().addTempEffect(PotionEffectType.INCREASE_DAMAGE, 0, duration * 20, false);
         user.getRole().addMaxHealth(6);
         user.getRole().heal(6);
+        Bukkit.getScheduler().runTaskLater(main, () -> {
+            if (user.getRole() != null && user.getRole().equals(arenaRole)) user.getRole().removeMaxHealth(6);
+        }, 20L*duration);
     }
 
     @Override
