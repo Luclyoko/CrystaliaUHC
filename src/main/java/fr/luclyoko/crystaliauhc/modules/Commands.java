@@ -17,5 +17,6 @@ public class Commands {
         main.getCommand("host").setExecutor(new HostCommand(main));
         main.getCommand("force").setExecutor(new ForceCommand(main));
         main.getCommand("alarm").setExecutor(new AlarmCommand(main));
+        main.getCommand("doc").setExecutor(new DocCommand(main));
     }
 }

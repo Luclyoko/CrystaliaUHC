@@ -1,5 +1,6 @@
 package fr.luclyoko.crystaliauhc;
 
+import fr.luclyoko.crystaliauhc.discordbot.Bot;
 import fr.luclyoko.crystaliauhc.game.GameManager;
 import fr.luclyoko.crystaliauhc.guis.GuiManager;
 import fr.luclyoko.crystaliauhc.map.MapManager;
@@ -39,6 +40,8 @@ public class Main extends JavaPlugin {
 
     private Title title;
 
+    private Bot bot;
+
     public static Main getInstance() {
         return instance;
     }
@@ -75,6 +78,10 @@ public class Main extends JavaPlugin {
         return this.title;
     }
 
+    public Bot getBot() {
+        return bot;
+    }
+
     public Main() {
         instance = this;
     }
@@ -99,6 +106,12 @@ public class Main extends JavaPlugin {
             this.playerManager = new PlayerManager(this);
             this.teamManager = new TeamManager(this);
             this.title = new Title();
+            this.bot = new Bot(this);
+            try {
+                bot.initBot();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }, 1L);
     }
 

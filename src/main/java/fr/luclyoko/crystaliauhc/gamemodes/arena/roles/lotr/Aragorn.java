@@ -1,6 +1,7 @@
 package fr.luclyoko.crystaliauhc.gamemodes.arena.roles.lotr;
 
 import fr.luclyoko.crystaliauhc.game.GameManager;
+import fr.luclyoko.crystaliauhc.gamemodes.arena.powers.AragornCrown;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.powers.FightingSpirit;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.ArenaRole;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.ArenaRolesEnum;
@@ -18,6 +19,7 @@ public class Aragorn extends ArenaRole {
         super(gameManager, crystaliaPlayer);
         this.arenaRolesEnum = ArenaRolesEnum.ARAGORN;
         addPower(new FightingSpirit(getArenaUHC(), this, main));
+        addPower(new AragornCrown(getArenaUHC(), this, main));
     }
 
     @Override

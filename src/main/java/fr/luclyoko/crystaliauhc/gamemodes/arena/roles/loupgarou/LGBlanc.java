@@ -15,7 +15,7 @@ import java.util.List;
 public class LGBlanc extends ArenaRole {
     public LGBlanc(GameManager gameManager, CrystaliaPlayer crystaliaPlayer) {
         super(gameManager, crystaliaPlayer);
-        this.arenaRolesEnum = ArenaRolesEnum.LGBLANC;
+        this.arenaRolesEnum = ArenaRolesEnum.LG_BLANC;
         addMaxHealth(10);
         addNightEffect(PotionEffectType.INCREASE_DAMAGE, 0);
         addPermEffect(PotionEffectType.NIGHT_VISION, 0);

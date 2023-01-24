@@ -13,6 +13,7 @@ public enum ArenaPowerEnum {
     DOMA("Doma", "§5", Material.QUARTZ, DomaSteal.class),
     FLASH("Flash", "§e", Material.NETHER_STAR, Flash.class),
     RAGE_DE_VAINCRE("Rage de Vaincre", "§4", Material.BLAZE_POWDER, FightingSpirit.class),
+    CROWN("Couronne", "§e", Material.GOLD_NUGGET, AragornCrown.class),
     TORNADE_DE_FEU("Tornade de Feu", "§6", Material.MAGMA_CREAM, FireTornado.class),
     MAIN_CELESTE("Main Céleste", "§e", Material.GLOWSTONE_DUST, CelestialHand.class),
     TIR_HELICOPTERE("Tir Hélicoptère", "§6", Material.NETHER_STAR, HelicopterShot.class),
@@ -22,6 +23,7 @@ public enum ArenaPowerEnum {
     MIKASA_BOOSTER("Booster", "§f", Material.SUGAR, MikasaBooster.class),
     KIRA_DEATH_NOTE("Death Note", "§c", Material.BOOK, KiraDeathNote.class),
     MISA_DEATH_NOTE("Death Note", "§c", Material.BOOK, MisaDeathNote.class),
+    NORA("Nora", "§5", Material.NETHER_STAR, Nora.class),
     JINKI("Jinki", "§c", Material.LEASH, Jinki.class),
     NUEES_ARDENTES("Nuées Ardentes", "§b", Material.NETHER_STAR, FieryClouds.class);
 

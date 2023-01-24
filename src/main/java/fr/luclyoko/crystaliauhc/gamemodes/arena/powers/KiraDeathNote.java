@@ -7,7 +7,6 @@ import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.util.Vector;
 
 import java.util.Optional;

@@ -7,7 +7,6 @@ import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffectType;
 
 public class FireGodDance extends ArenaPower {
@@ -38,6 +37,6 @@ public class FireGodDance extends ArenaPower {
 
     @Override
     public String getDescription() {
-        return "Vous permet d'obtenir l'effet §bSpeed 1 §fet d'§benflammer §fvos adversaires pendant 40 secondes.";
+        return "Vous permet d'obtenir les effets §bSpeed 1 §fet §bResistance 1 §fainsi que d'§benflammer §fvos adversaires pendant 40 secondes.";
     }
 }

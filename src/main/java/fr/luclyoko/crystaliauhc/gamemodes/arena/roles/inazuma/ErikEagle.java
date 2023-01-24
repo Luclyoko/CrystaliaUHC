@@ -4,7 +4,6 @@ import fr.luclyoko.crystaliauhc.game.GameManager;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.powers.HelicopterShot;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.ArenaRole;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.ArenaRolesEnum;
-import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.deathnote.Shinigami;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

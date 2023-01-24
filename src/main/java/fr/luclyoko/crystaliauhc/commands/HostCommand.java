@@ -48,7 +48,7 @@ public class HostCommand implements TabExecutor {
                                 message.append(" ");
                         }
                         message = new StringBuilder(message.toString().replaceAll("&", "§"));
-                                Bukkit.broadcastMessage("\n§8§l• §c§l" + player.getName() + "§8» §r" + message + "\n ");
+                                Bukkit.broadcastMessage("\n§8§l• §c§l" + player.getName() + " §8» §r" + message + "\n ");
                     } else {
                         player.sendMessage(this.gameManager.getGamemodeUhc().getDisplayNameChat() + "§cVous n'avez pas précisé de message.");
                     }

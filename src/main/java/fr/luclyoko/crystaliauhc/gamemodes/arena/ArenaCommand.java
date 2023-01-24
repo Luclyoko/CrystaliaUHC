@@ -59,6 +59,9 @@ public class ArenaCommand implements TabExecutor {
                                     if (crystaliaTarget.isOnline()) {
                                         playerToForce = crystaliaTarget;
                                     }
+                                } else {
+                                    crystaliaPlayer.sendMessage("§cErreur: Joueur introuvable.");
+                                    return true;
                                 }
                             }
                             try {
@@ -83,6 +86,9 @@ public class ArenaCommand implements TabExecutor {
                                     if (crystaliaTarget.isOnline()) {
                                         playerToGrant = crystaliaTarget;
                                     }
+                                } else {
+                                    crystaliaPlayer.sendMessage("§cErreur: Joueur introuvable.");
+                                    return true;
                                 }
                             }
                             if (!playerToGrant.isOnline() || !playerToGrant.isAlive()) return true;
@@ -140,6 +146,16 @@ public class ArenaCommand implements TabExecutor {
                 return powers.stream().filter(s -> s.startsWith(args[1].toUpperCase(Locale.ROOT))).collect(Collectors.toList());
             }
         }
+        if (args.length == 3) {
+            if (args[0].equals("forcenextrole") || args[0].equals("grantpower")) {
+                List<String> names = new ArrayList<>();
+                for (CrystaliaPlayer crystaliaPlayer : main.getPlayerManager().getOnlineAlivePlayers()) {
+                    names.add(crystaliaPlayer.getPlayerName());
+                }
+                return names.stream().filter(s -> s.startsWith(args[2].toUpperCase(Locale.ROOT))).collect(Collectors.toList());
+            }
+        }
+
         return Collections.emptyList();
     }
 }

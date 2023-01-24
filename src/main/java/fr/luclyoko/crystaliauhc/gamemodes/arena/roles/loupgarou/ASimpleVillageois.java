@@ -8,6 +8,6 @@ import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
 public class ASimpleVillageois extends ArenaRole {
     public ASimpleVillageois(GameManager gameManager, CrystaliaPlayer crystaliaPlayer) {
         super(gameManager, crystaliaPlayer);
-        this.arenaRolesEnum = ArenaRolesEnum.SIMPLEVILLAGEOIS;
+        this.arenaRolesEnum = ArenaRolesEnum.SIMPLE_VILLAGEOIS;
     }
 }

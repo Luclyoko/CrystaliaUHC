@@ -15,7 +15,7 @@ import java.util.List;
 public class LGSimple extends ArenaRole {
     public LGSimple(GameManager gameManager, CrystaliaPlayer crystaliaPlayer) {
         super(gameManager, crystaliaPlayer);
-        this.arenaRolesEnum = ArenaRolesEnum.LGSIMPLE;
+        this.arenaRolesEnum = ArenaRolesEnum.LG_SIMPLE;
         addNightEffect(PotionEffectType.INCREASE_DAMAGE, 0);
         addPermEffect(PotionEffectType.NIGHT_VISION, 0);
     }

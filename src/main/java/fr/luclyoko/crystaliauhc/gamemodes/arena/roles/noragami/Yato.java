@@ -1,6 +1,7 @@
 package fr.luclyoko.crystaliauhc.gamemodes.arena.roles.noragami;
 
 import fr.luclyoko.crystaliauhc.game.GameManager;
+import fr.luclyoko.crystaliauhc.gamemodes.arena.powers.Nora;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.ArenaRole;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.ArenaRolesEnum;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
@@ -25,6 +26,7 @@ public class Yato extends ArenaRole {
         this.arenaRolesEnum = ArenaRolesEnum.YATO;
         this.random = new Random(System.currentTimeMillis());
         addPermEffect(PotionEffectType.SPEED, 0);
+        addPower(new Nora(getArenaUHC(), this, main));
     }
 
     @EventHandler

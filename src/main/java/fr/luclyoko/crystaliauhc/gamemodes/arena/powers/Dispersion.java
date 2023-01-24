@@ -6,7 +6,6 @@ import fr.luclyoko.crystaliauhc.gamemodes.arena.ArenaUHC;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.ArenaRole;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
 import org.bukkit.Bukkit;
-import org.bukkit.event.player.PlayerInteractEvent;
 
 public class Dispersion extends ArenaPower {
     public Dispersion(ArenaUHC arenaUHC, ArenaRole arenaRole, Main main) {

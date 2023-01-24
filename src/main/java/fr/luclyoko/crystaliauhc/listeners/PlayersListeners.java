@@ -177,7 +177,13 @@ public class PlayersListeners implements Listener {
 
     @EventHandler
     public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
-        event.setFormat(event.getPlayer().getDisplayName() + "§8: §r" + event.getMessage());
+        String message = event.getMessage();
+        Player player = event.getPlayer();
+        String format = "<player>§8: §r<message>";
+
+        format = format.replace("<player>", "%1$s");
+        format = format.replace("<message>", "%2$s");
+        event.setFormat(format);
     }
 
     @EventHandler

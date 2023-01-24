@@ -43,6 +43,11 @@ commands:
     aliases:
       - ar
     description: Commande principale du mode ArenaUHC.
+  doc:
+    usage: /doc
+    aliases:
+      - docs
+    description: Commande pour obtenir le lien vers le document du serveur.
 
 permissions:
   crystaliauhc.*:

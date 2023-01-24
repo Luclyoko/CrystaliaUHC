@@ -6,22 +6,23 @@ import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.ArenaRole;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
 import org.bukkit.potion.PotionEffectType;
 
-public class LivaiBooster extends ArenaPower {
-    public LivaiBooster(ArenaUHC arenaUHC, ArenaRole arenaRole, Main main) {
+public class Nora extends ArenaPower {
+
+    public Nora(ArenaUHC arenaUHC, ArenaRole arenaRole, Main main) {
         super(arenaUHC, arenaRole, main);
-        this.arenaPowerEnum = ArenaPowerEnum.LIVAI_BOOSTER;
-        this.duration = 120;
-        this.cooldown = 180;
+        this.arenaPowerEnum = ArenaPowerEnum.NORA;
+        this.cooldown = 120;
+        this.duration = 90;
     }
 
     @Override
     public void execute(CrystaliaPlayer user) {
-        user.getRole().addTempEffect(PotionEffectType.SPEED, 1, duration * 20, false);
+        user.getPlayer().setVelocity(user.getPlayer().getLocation().getDirection().multiply(2.5D).setY(0.9D));
         user.getRole().addTempEffect(PotionEffectType.INCREASE_DAMAGE, 0, duration * 20, false);
     }
 
     @Override
     public String getDescription() {
-        return "Vous permet d'obtenir les effets §bSpeed 2 §fet §bStrength 1 §fpendant 2 minutes.";
+        return "Vous permet d'effectuer un dash et d'obtenir l'effet §bStrength 1 §fpendant 1 minute et 30 secondes.";
     }
 }

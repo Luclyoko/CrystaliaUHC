@@ -5,7 +5,6 @@ import fr.luclyoko.crystaliauhc.gamemodes.arena.ArenaUHC;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.ArenaRole;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
 import org.bukkit.Bukkit;
-import org.bukkit.event.player.PlayerInteractEvent;
 
 public class FightingSpirit extends ArenaPower {
     public FightingSpirit(ArenaUHC arenaUHC, ArenaRole arenaRole, Main main) {
