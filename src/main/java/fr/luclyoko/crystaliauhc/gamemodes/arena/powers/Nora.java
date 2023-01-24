@@ -4,6 +4,7 @@ import fr.luclyoko.crystaliauhc.Main;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.ArenaUHC;
 import fr.luclyoko.crystaliauhc.gamemodes.arena.roles.ArenaRole;
 import fr.luclyoko.crystaliauhc.players.CrystaliaPlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.potion.PotionEffectType;
 
 public class Nora extends ArenaPower {
@@ -19,6 +20,14 @@ public class Nora extends ArenaPower {
     public void execute(CrystaliaPlayer user) {
         user.getPlayer().setVelocity(user.getPlayer().getLocation().getDirection().multiply(2.5D).setY(0.9D));
         user.getRole().addTempEffect(PotionEffectType.INCREASE_DAMAGE, 0, duration * 20, false);
+        if (user.getRole() instanceof ArenaRole) {
+            ArenaRole role = (ArenaRole) user.getRole();
+            user.getRole().setNoFall(true);
+            Bukkit.getScheduler().runTaskLater(main, () -> {
+                if (user.getRole() != null && user.getRole().equals(role))
+                    user.getRole().setNoFall(false);
+            }, 60);
+        }
     }
 
     @Override
