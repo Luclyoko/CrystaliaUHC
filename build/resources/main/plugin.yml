@@ -1,0 +1,72 @@
+name: CrystaliaUHC
+author: Luclyoko
+version: 1.0-SNAPSHOT
+description: Plugin UHC du serveur Crystalia
+
+main: fr.luclyoko.crystaliauhc.Main
+load: STARTUP
+
+commands:
+  host:
+    aliases:
+      - h
+    usage: /host <config>
+    description: Commande de gestion de la partie.
+    permission: crystaliauhc.host
+    permission-message: Vous n'êtes pas autorisé à faire ceci!
+  admin:
+    aliases:
+      - a
+    usage: /admin
+    description: Commande d'administration du serveur.
+    permission: crystaliauhc.admin
+  map:
+    usage: /map <radius>
+    aliases:
+      - m
+    description: Commande temporaire de prégénération.
+  dev:
+    usage: /dev
+    description: Commande d'accès à l'interface de développement.
+    permission: crystaliauhc.dev
+    permission-message: Vous n'êtes pas autorisé à faire ceci!
+  force:
+    usage: /force <args>
+    description: Commande pour forcer les timers.
+    permission: crystaliauhc.host
+    permission-message: Vous n'êtes pas autorisé à faire ceci!
+  alarm:
+    usage: /alarm <hour> <minutes>
+    description: Commande pour créer une alarme.
+  arena:
+    usage: /arena <args>
+    aliases:
+      - ar
+    description: Commande principale du mode ArenaUHC.
+  doc:
+    usage: /doc
+    aliases:
+      - docs
+    description: Commande pour obtenir le lien vers le document du serveur.
+
+permissions:
+  crystaliauhc.*:
+    description: Accès à l'ensemble des paramètres du plugin.
+    default: false
+    children:
+      crystaliauhc.host: true
+      crystaliauhc.admin: true
+      crystaliauhc.spec: true
+      crystaliauhc.dev: true
+  crystaliauhc.host:
+    description: Accès aux paramètres réservés aux hosts d'une partie.
+    default: op
+  crystaliauhc.admin:
+    description: Accès aux options réservées aux administrateurs du serveur.
+    default: op
+  crystaliauhc.spec:
+    description: Accès aux options réservées aux modérateurs d'une partie.
+    default: false
+  crystaliauhc.dev:
+    description: Accès aux paramètres réservés au développement du plugin.
+    default: op
